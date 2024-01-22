@@ -57,11 +57,11 @@ class _MyButtonState extends State<MyButton> {
                       return AlertDialog(
                         content: Container(
                             margin: EdgeInsets.only(top: 20),
-                            child:
-                                Container(
-                                  height: 150,
-                                  child: StatefulBuilder(builder: (context, setState) {
-                                                                return Column(
+                            child: Container(
+                              height: 150,
+                              child:
+                                  StatefulBuilder(builder: (context, setState) {
+                                return Column(
                                   children: <Widget>[
                                     Stack(
                                       alignment: Alignment.center,
@@ -102,9 +102,9 @@ class _MyButtonState extends State<MyButton> {
                                       ],
                                     ),
                                   ],
-                                                                );
-                                                              }),
-                                )),
+                                );
+                              }),
+                            )),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -128,6 +128,8 @@ class _MyButtonState extends State<MyButton> {
                       fontSize: 15, color: Color(0xffbc84e9)),
                 )),
           ),
+          SizedBox(height: 20,),
+          Text('$avgcyc')
         ],
       ),
     );

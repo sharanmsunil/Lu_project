@@ -17,6 +17,8 @@ class Lu_Settings extends StatefulWidget {
 class _Lu_SettingsState extends State<Lu_Settings> {
   var avgcyc;
   var avgprd;
+  var cday =28;
+  var pday =5;
 
   _Lu_SettingsState({required this.avgcyc, required this.avgprd});
 
@@ -83,7 +85,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             NumberPicker(
                                                 minValue: 20,
                                                 maxValue: 50,
-                                                value: widget.avgcyc,
+                                                value: cday,
+                                                //widget.avgcyc,
                                                 itemHeight: 30,
                                                 itemWidth: 30,
                                                 itemCount: 5,
@@ -96,8 +99,9 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                                     color: Colors.grey[400],
                                                     fontSize: 15),
                                                 onChanged: (value) => setState(
-                                                      () =>
-                                                          widget.avgcyc = value,
+                                                      () => cday
+                                                          //widget.avgcyc
+                                                          = value,
                                                     )),
                                           ],
                                         ),
@@ -123,7 +127,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       );
                     },
                     child: Text(
-                      "${widget.avgcyc} days",
+                      "$cday days",
                       style: GoogleFonts.kameron(
                           fontSize: 15, color: Color(0xffbc84e9)),
                     )),
@@ -175,7 +179,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             NumberPicker(
                                                 minValue: 1,
                                                 maxValue: 20,
-                                                value: widget.avgprd,
+                                                value: pday,
+                                                //widget.avgprd,
                                                 itemHeight: 30,
                                                 itemWidth: 30,
                                                 itemCount: 5,
@@ -189,7 +194,9 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                                     fontSize: 15),
                                                 onChanged: (value) => setState(
                                                       () =>
-                                                          widget.avgprd = value,
+                                                      pday
+                                                          //widget.avgprd
+                                                          = value,
                                                     )),
                                           ],
                                         ),
@@ -215,13 +222,13 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       );
                     },
                     child: Text(
-                      "${widget.avgprd} days",
+                      "$pday days",
                       style: GoogleFonts.kameron(
                           fontSize: 15, color: Color(0xffbc84e9)),
                     )),
               ),
-              Text('${widget.avgcyc}'),
-              Text('${widget.avgprd}')
+              Text('$cday'),
+              Text('$pday')
             ],
           ),
         ),
