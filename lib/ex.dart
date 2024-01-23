@@ -58,11 +58,21 @@ class _MyButtonState extends State<MyButton> {
                         content: Container(
                             margin: EdgeInsets.only(top: 20),
                             child: Container(
-                              height: 150,
+                              height: 200,
                               child:
                                   StatefulBuilder(builder: (context, setState) {
                                 return Column(
                                   children: <Widget>[
+                                    Text(
+                                      'Duration of cycle',
+                                      style:
+                                      GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                    ),
+                                    Text(
+                                      'Choose the number of days',
+                                      style:
+                                      GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                    ),
                                     Stack(
                                       alignment: Alignment.center,
                                       children: [
@@ -114,7 +124,7 @@ class _MyButtonState extends State<MyButton> {
                                 child: Text(
                               'Select',
                               style: GoogleFonts.kameron(
-                                  fontSize: 15, color: Color(0xffbc84e9)),
+                                  fontSize: 15, color: Color(0xff812ac7)),
                             )),
                           ),
                         ],
@@ -129,7 +139,8 @@ class _MyButtonState extends State<MyButton> {
                 )),
           ),
           SizedBox(height: 20,),
-          Text('$avgcyc')
+          Text('$avgcyc'),
+
         ],
       ),
     );

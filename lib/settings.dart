@@ -21,6 +21,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
   var pday =5;
 
   _Lu_SettingsState({required this.avgcyc, required this.avgprd});
+  bool isCTickVisible = false;
+  bool isPTickVisible = false;
 
 
   @override
@@ -58,11 +60,21 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                             content: Container(
                                 margin: EdgeInsets.only(top: 20),
                                 child: Container(
-                                  height: 150,
+                                  height: 200,
                                   child: StatefulBuilder(
                                       builder: (context, setState) {
                                     return Column(
                                       children: <Widget>[
+                                        Text(
+                                          'Duration of cycle',
+                                          style:
+                                          GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                        ),
+                                        Text(
+                                          'Choose the number of days',
+                                          style:
+                                          GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                        ),
                                         Stack(
                                           alignment: Alignment.center,
                                           children: [
@@ -118,7 +130,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                     child: Text(
                                   'Select',
                                   style: GoogleFonts.kameron(
-                                      fontSize: 15, color: Color(0xffbc84e9)),
+                                      fontSize: 15, color: Color(0xff812ac7)),
                                 )),
                               ),
                             ],
@@ -152,11 +164,21 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                             content: Container(
                                 margin: EdgeInsets.only(top: 20),
                                 child: Container(
-                                  height: 150,
+                                  height: 200,
                                   child: StatefulBuilder(
                                       builder: (context, setState) {
                                     return Column(
                                       children: <Widget>[
+                                        Text(
+                                          'Duration of period',
+                                          style:
+                                          GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                        ),
+                                        Text(
+                                          'Choose the number of days',
+                                          style:
+                                          GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
+                                        ),
                                         Stack(
                                           alignment: Alignment.center,
                                           children: [
@@ -213,7 +235,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                     child: Text(
                                   'Select',
                                   style: GoogleFonts.kameron(
-                                      fontSize: 15, color: Color(0xffbc84e9)),
+                                      fontSize: 15, color: Color(0xff812ac7)),
                                 )),
                               ),
                             ],
@@ -227,8 +249,92 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           fontSize: 15, color: Color(0xffbc84e9)),
                     )),
               ),
-              Text('$cday'),
-              Text('$pday')
+             SizedBox(height: 20,),
+              Row(
+                children: [
+                  SizedBox(width: 30,),
+                  Icon(Icons.calendar_month_outlined,color: Colors.grey[400],size: 40,),
+                  SizedBox(width: 20,),
+                  Text('Notify about the start of \nthe period',
+                    style:
+                    GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),),
+                  SizedBox(width: 40,),
+                  GestureDetector(
+                    onTap: () {
+                      // Toggle the visibility of the tick icon
+                      setState(() {
+                        isCTickVisible = !isCTickVisible;
+                      });
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xffbc84e9),
+                          ),
+                        ),
+                        if (isCTickVisible)
+                          Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+              SizedBox(height: 20,),
+              Row(
+                children: [
+                  SizedBox(width: 30,),
+                  Icon(Icons.circle_outlined,color: Colors.grey[400],size: 40,),
+                  SizedBox(width: 20,),
+                  Text('Notify about the start of \nthe ovulation',
+                    style:
+                    GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),),
+                  SizedBox(width: 40,),
+                  GestureDetector(
+                    onTap: () {
+                      // Toggle the visibility of the tick icon
+                      setState(() {
+                        isPTickVisible = !isPTickVisible;
+                      });
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xffbc84e9),
+                          ),
+                        ),
+                        if (isPTickVisible)
+                          Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+              SizedBox(height: 20,),
+              Text('Theme',
+                style:
+                GoogleFonts.kameron(color: Colors.black, fontSize: 20),),
+              SizedBox(height: 20,),
+
             ],
           ),
         ),
