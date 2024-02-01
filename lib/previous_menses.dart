@@ -4,19 +4,15 @@ import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:luna_loom/home_screen.dart';
 
 class Prvs_Mns extends StatefulWidget {
-  int avgcyc;
-  int avgprd;
-   Prvs_Mns({super.key,required this.avgcyc,required this.avgprd});
+
+   Prvs_Mns({super.key});
 
   @override
-  State<Prvs_Mns> createState() => _Prvs_MnsState(avgcyc: avgcyc, avgprd: avgprd);
+  State<Prvs_Mns> createState() => _Prvs_MnsState();
 }
 
 class _Prvs_MnsState extends State<Prvs_Mns> {
   late DateTime selectedDate;
-  int avgcyc;
-  int avgprd;
-  _Prvs_MnsState({required this.avgcyc,required this.avgprd});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +65,8 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
             ),
             Text('menses begin?',
                 style: GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
+            SizedBox(height: 20,),
             Container(
-              margin: EdgeInsets.only(top: 20),
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: DatePickerWidget(
                 looping: false,
@@ -87,24 +83,18 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                 ),
               ),
             ),
-
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: ElevatedButton(
+        SizedBox(height: 30,),
+            ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Home_Screen(avgcyc: avgcyc, avgprd: avgprd,
-                          //selectedDate: selectedDate,
-                        )));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home_Screen()));
                   },
                   child: Text(
                     'Continue',
                     style: GoogleFonts.kameron(
                         fontSize: 20, color: Color(0xff812ac7)),
                   )),
-            ),
           ],
         ),
       ),

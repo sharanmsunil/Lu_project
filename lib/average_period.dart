@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/previous_menses.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Avg_Period extends StatefulWidget {
-  int avgcyc;
-   Avg_Period({super.key,required this.avgcyc});
+
+  Avg_Period({super.key});
 
   @override
-  State<Avg_Period> createState() => _Avg_PeriodState(avgcyc: avgcyc);
+  State<Avg_Period> createState() => _Avg_PeriodState();
 }
 
 class _Avg_PeriodState extends State<Avg_Period> {
   var avgprd = 5;
-  int avgcyc;
-  _Avg_PeriodState({required this.avgcyc});
+  late SharedPreferences preferences;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,88 +61,104 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     )),
               ]),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Text('How long does your period last',
-                  style: GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
+            SizedBox(
+              height: 30,
             ),
+            Text('How long does your period last',
+                style: GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
             Text('on average?',
                 style: GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    alignment: Alignment.center,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.grey.shade200),
-                        boxShadow: [BoxShadow(color: Color(0xff812ac7),blurRadius: 5,spreadRadius: .5)]),
-                  ),
-                  Positioned(
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                            boxShadow: [BoxShadow(color: Color(0xff812ac7),blurRadius: 10,spreadRadius: .5)]),
-                      )),
-                  Container(
-                    child: NumberPicker(
-                        minValue: 1,
-                        maxValue: 20,
-                        value: avgprd,
-                        itemHeight: 45,
-                        itemWidth: 45,
-                        itemCount: 7,
-                        axis: Axis.horizontal,
-                        selectedTextStyle: TextStyle(
-                          color: Color(0xff812ac7),
-                          fontSize: 25,
-                        ),
-                        textStyle: TextStyle(color: Color(0xffbc84e9),fontSize: 15),
-                        onChanged: (value) => setState(
-                              () => avgprd = value,
-                        )),
-                  ),
-                ],
-              ),
+            SizedBox(
+              height: 20,
             ),
-            Container(margin: EdgeInsets.only(top: 5),child: Text('days',style: GoogleFonts.kameron(fontSize: 15, color: Colors.white))),
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: ElevatedButton(
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.grey.shade200),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xff812ac7),
+                            blurRadius: 5,
+                            spreadRadius: .5)
+                      ]),
+                ),
+                Positioned(
+                    child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xff812ac7),
+                            blurRadius: 10,
+                            spreadRadius: .5)
+                      ]),
+                )),
+                Container(
+                  child: NumberPicker(
+                      minValue: 1,
+                      maxValue: 20,
+                      value: avgprd,
+                      itemHeight: 45,
+                      itemWidth: 45,
+                      itemCount: 7,
+                      axis: Axis.horizontal,
+                      selectedTextStyle: TextStyle(
+                        color: Color(0xff812ac7),
+                        fontSize: 25,
+                      ),
+                      textStyle:
+                          TextStyle(color: Color(0xffbc84e9), fontSize: 15),
+                      onChanged: (value) => setState(
+                            () => avgprd = value,
+                          )),
+                ),
+              ],
+            ),
+            SizedBox(height: 5,),
+            Text('days',
+                    style: GoogleFonts.kameron(
+                        fontSize: 15, color: Colors.white)),
+            SizedBox(height: 30,),
+            ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Prvs_Mns(avgcyc: avgcyc, avgprd: avgprd,)));
+                  onPressed: () async{
+                    preferences = await SharedPreferences.getInstance();
+                    int averageperiod = avgprd;
+                    preferences.setInt("AvgPeriod", averageperiod);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Prvs_Mns()));
                   },
                   child: Text(
                     'Continue',
                     style: GoogleFonts.kameron(
                         fontSize: 20, color: Color(0xff812ac7)),
                   )),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: ElevatedButton(
+            SizedBox(height: 10,),
+            ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Prvs_Mns(avgcyc: avgcyc, avgprd: avgprd,)));
+                  onPressed: () async{
+                    preferences = await SharedPreferences.getInstance();
+                    int averageperiod = avgprd;
+                    preferences.setInt("AvgPeriod", averageperiod);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Prvs_Mns()));
                   },
                   child: Text(
                     "I don't remember",
                     style: GoogleFonts.kameron(
                         fontSize: 15, color: Color(0xffbc84e9)),
                   )),
-            ),
           ],
         ),
       ),

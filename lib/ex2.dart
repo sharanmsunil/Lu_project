@@ -81,7 +81,9 @@ class _MyWidgetState extends State<MyWidget> {
               SizedBox(width: 20,),
               InkWell(onTap: () =>  widget.notifier.value = widget.mode == ThemeMode.system , child: Container(height: 100,width: 100,color: Colors.red,)),
             ],
-          )
+          ),
+          SizedBox(height: 30,),
+          Text('Hello',style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold),)
         ],
       ),
     );

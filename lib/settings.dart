@@ -1,26 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:luna_loom/average_cycle.dart';
+import 'package:luna_loom/home_screen.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Lu_Settings extends StatefulWidget {
-  var avgcyc;
-  var avgprd;
 
-  Lu_Settings({super.key, required this.avgcyc, required this.avgprd});
+  Lu_Settings({super.key});
 
   @override
   State<Lu_Settings> createState() =>
-      _Lu_SettingsState(avgcyc: avgcyc, avgprd: avgprd);
+      _Lu_SettingsState();
 }
 
 class _Lu_SettingsState extends State<Lu_Settings> {
-  var avgcyc;
-  var avgprd;
-  var cday =28;
-  var pday =5;
+  late SharedPreferences preferences;
+  late int avgcyc;
+  late int avgprd;
 
-  _Lu_SettingsState({required this.avgcyc, required this.avgprd});
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  void fetchData()async{
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      avgcyc = preferences.getInt("AvgCycle")!;
+      avgprd = preferences.getInt("AvgPeriod")!;
+    });
+  }
+  //var cday =28;
+  //var pday =5;
+
   bool isCTickVisible = false;
   bool isPTickVisible = false;
 
@@ -33,23 +46,28 @@ class _Lu_SettingsState extends State<Lu_Settings> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                  margin: EdgeInsets.only(top: 30),
-                  child: Text(
-                    'Settings',
-                    style:
-                        GoogleFonts.kameron(color: Colors.black, fontSize: 20),
-                  )),
-              Container(
-                  margin: EdgeInsets.only(top: 50),
-                  child: Text(
+              SizedBox(height: 30,),
+               Row(
+                 children: [
+                   IconButton(onPressed: (){
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home_Screen()));
+                   }, icon: Icon(Icons.arrow_back)),
+                   SizedBox(width: 110,),
+                   Text(
+                        'Settings',
+                        style:
+                            GoogleFonts.kameron(color: Colors.black, fontSize: 20),
+                      ),
+                 ],
+               ),
+              SizedBox(height: 50,),
+               Text(
                     'Duration of cycle',
                     style: GoogleFonts.kameron(
                         color: Colors.grey[600], fontSize: 15),
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                child: ElevatedButton(
+                  ),
+              SizedBox(height: 10,),
+              ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 1, minimumSize: Size(300, 40)),
                     onPressed: () {
@@ -97,8 +115,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             NumberPicker(
                                                 minValue: 20,
                                                 maxValue: 50,
-                                                value: cday,
-                                                //widget.avgcyc,
+                                                value: avgcyc,
                                                 itemHeight: 30,
                                                 itemWidth: 30,
                                                 itemCount: 5,
@@ -111,7 +128,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                                     color: Colors.grey[400],
                                                     fontSize: 15),
                                                 onChanged: (value) => setState(
-                                                      () => cday
+                                                      () => avgcyc
                                                           //widget.avgcyc
                                                           = value,
                                                     )),
@@ -123,7 +140,11 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                 )),
                             actions: [
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async{
+                                  preferences = await SharedPreferences.getInstance();
+                                  setState(() {
+                                    preferences.setInt("AvgCycle", avgcyc);
+                                  });
                                   Navigator.of(context).pop();
                                 },
                                 child: Center(
@@ -139,21 +160,18 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       );
                     },
                     child: Text(
-                      "$cday days",
+                      "$avgcyc days",
                       style: GoogleFonts.kameron(
                           fontSize: 15, color: Color(0xffbc84e9)),
                     )),
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
+              SizedBox(height: 20,),
+              Text(
                     'Duration of period',
                     style: GoogleFonts.kameron(
                         color: Colors.grey[600], fontSize: 15),
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                child: ElevatedButton(
+                  ),
+          SizedBox(height: 10,),
+             ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 1, minimumSize: Size(300, 40)),
                     onPressed: () {
@@ -201,7 +219,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             NumberPicker(
                                                 minValue: 1,
                                                 maxValue: 20,
-                                                value: pday,
+                                                value: avgprd,
                                                 //widget.avgprd,
                                                 itemHeight: 30,
                                                 itemWidth: 30,
@@ -216,7 +234,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                                     fontSize: 15),
                                                 onChanged: (value) => setState(
                                                       () =>
-                                                      pday
+                                                      avgprd
                                                           //widget.avgprd
                                                           = value,
                                                     )),
@@ -228,7 +246,11 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                 )),
                             actions: [
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async{
+                                  preferences = await SharedPreferences.getInstance();
+                                  setState(() {
+                                    preferences.setInt("AvgPeriod", avgprd);
+                                  });
                                   Navigator.of(context).pop();
                                 },
                                 child: Center(
@@ -244,11 +266,10 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       );
                     },
                     child: Text(
-                      "$pday days",
+                      "$avgprd days",
                       style: GoogleFonts.kameron(
                           fontSize: 15, color: Color(0xffbc84e9)),
                     )),
-              ),
              SizedBox(height: 20,),
               Row(
                 children: [
@@ -334,6 +355,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                 style:
                 GoogleFonts.kameron(color: Colors.black, fontSize: 20),),
               SizedBox(height: 20,),
+
 
             ],
           ),

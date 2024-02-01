@@ -88,7 +88,7 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Avg_Cycle()));
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avg_Cycle()));
                   },
                   child: Text(
                     'Continue',

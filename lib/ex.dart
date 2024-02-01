@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:luna_loom/exhome.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,6 +32,7 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> {
   var avgcyc = 28;
+  late SharedPreferences preferences;
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +143,12 @@ class _MyButtonState extends State<MyButton> {
           ),
           SizedBox(height: 20,),
           Text('$avgcyc'),
+          ElevatedButton(onPressed: ()async{
+            preferences = await SharedPreferences.getInstance();
+            int averagep = avgcyc;
+            preferences.setInt("AvgCycle", averagep);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Ex_home()));
+    }, child: Text('Next'))
 
         ],
       ),
