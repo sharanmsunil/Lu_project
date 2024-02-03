@@ -16,15 +16,18 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
-   late int avgcyc;
-   late int avgprd;
+  late int avgcyc;
+  late int avgprd;
+  late int cycleday=5;
   String? lastmensis;
   static DateTime? cycleStartDate;
   static DateTime? cycleendDate;
   static DateTime? periodadder;
+  static DateTime? PCycleAdder;
   static DateTime? ovulationadder;
   static DateTime? mainovule;
   late SharedPreferences preferences;
+  var bgcolor=Color(0xffbc84e9);
 
   String _currentDate = DateFormat.yMMMd().format(DateTime.now());
   final String _today = DateFormat.yMMMd().format(DateTime.now());
@@ -60,26 +63,25 @@ class _Home_ScreenState extends State<Home_Screen> {
       ));
 
   static Widget _mainovulationIcon(String day) => Container(
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
           color: Color(0xffbc84e9),
           borderRadius: BorderRadius.all(Radius.circular(1000)),
-          border: Border.all(color: Color(0xffea779c), width: 4.0)
-      ),
-      child:  Center(
+          border: Border.all(color: Color(0xffea779c), width: 4.0)),
+      child: Center(
         child: Text(
-          day,style: TextStyle(color: Colors.white),
+          day,
+          style: TextStyle(color: Colors.white),
         ),
-      )
-  );
+      ));
 
   EventList<Event> _markedDateMap = new EventList<Event>(
     events: {},
   );
 
-  List<DateTime> PeriodDates =[];
-  List<DateTime> mainOvulationDates =[];
-  List<DateTime> OvulationDates =[];
-
+  List<DateTime> PeriodDates = [];
+  List<DateTime> mainOvulationDates = [];
+  List<DateTime> OvulationDates = [];
+  List<DateTime> PCycle = [];
 
   @override
   void initState() {
@@ -87,6 +89,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     addPeriod();
     addOvulation();
     addmainOvulation();
+    addCycleDate();
     super.initState();
   }
 
@@ -101,42 +104,57 @@ class _Home_ScreenState extends State<Home_Screen> {
     });
   }
 
-  void addPeriod()async{
-    preferences =await SharedPreferences.getInstance();
+  void addPeriod() async {
+    preferences = await SharedPreferences.getInstance();
     setState(() {
       avgprd = preferences.getInt("AvgPeriod")!;
-      PeriodDates.add(DateTime(cycleStartDate!.year,cycleStartDate!.month,cycleStartDate!.day));
+      PeriodDates.add(DateTime(
+          cycleStartDate!.year, cycleStartDate!.month, cycleStartDate!.day));
       periodadder = cycleStartDate;
-      for(int i=1;i<avgprd;i++){
+      for (int i = 1; i < avgprd; i++) {
         periodadder = periodadder?.add(Duration(days: 1));
-        PeriodDates.add(DateTime(periodadder!.year,periodadder!.month,periodadder!.day));
+        PeriodDates.add(
+            DateTime(periodadder!.year, periodadder!.month, periodadder!.day));
       }
     });
-
   }
 
-  void addOvulation(){
+  void addOvulation() {
     ovulationadder = cycleendDate?.subtract(Duration(days: 12));
-    for(int i=1;i<8;i++){
-      OvulationDates.add(DateTime(ovulationadder!.year,ovulationadder!.month,ovulationadder!.day));
+    for (int i = 1; i < 8; i++) {
+      OvulationDates.add(DateTime(
+          ovulationadder!.year, ovulationadder!.month, ovulationadder!.day));
       ovulationadder = ovulationadder?.subtract(Duration(days: 1));
     }
   }
 
-  void addmainOvulation(){
+  void addmainOvulation() {
     mainovule = cycleendDate?.subtract(Duration(days: 14));
-    mainOvulationDates.add(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
-    for(int i=0;i<OvulationDates.length;i++){
-      if(OvulationDates[i]==mainOvulationDates[0]){
-        OvulationDates.remove(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
+    mainOvulationDates
+        .add(DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+    for (int i = 0; i < OvulationDates.length; i++) {
+      if (OvulationDates[i] == mainOvulationDates[0]) {
+        OvulationDates.remove(
+            DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
       }
     }
   }
 
+  void addCycleDate() async{
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      avgcyc = preferences.getInt("AvgCycle")!;
+      PCycleAdder = cycleStartDate;
+      for(int i = 0;i< avgcyc;i++){
+        PCycle.add(DateTime(PCycleAdder!.year,PCycleAdder!.month,PCycleAdder!.day,));
+        PCycleAdder = PCycleAdder?.add(Duration(days: 1));
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-
-
     for (int i = 0; i < PeriodDates.length; i++) {
       _markedDateMap.add(
           PeriodDates[i],
@@ -157,8 +175,15 @@ class _Home_ScreenState extends State<Home_Screen> {
                 OvulationDates[i].day.toString(),
               )));
     }
-    for(int i=0;i<mainOvulationDates.length;i++){
-      _markedDateMap.add(mainOvulationDates[i], new Event(date: mainOvulationDates[i],title: 'Event 5',icon: _mainovulationIcon(mainOvulationDates[i].day.toString(),)));
+    for (int i = 0; i < mainOvulationDates.length; i++) {
+      _markedDateMap.add(
+          mainOvulationDates[i],
+          new Event(
+              date: mainOvulationDates[i],
+              title: 'Event 5',
+              icon: _mainovulationIcon(
+                mainOvulationDates[i].day.toString(),
+              )));
     }
 
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -173,9 +198,49 @@ class _Home_ScreenState extends State<Home_Screen> {
       scrollDirection: Axis.vertical,
       //todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
-        this.setState(() {
+        setState(() {
           _currentDate2 = date;
           _currentDate = DateFormat.yMMMd().format(date);
+          for(int i=0;i<avgcyc;i++){
+            if(date == PCycle[i]){
+              cycleday=i+1;
+            }
+          }
+          for(int i=0;i<PeriodDates.length;i++){
+            for(int j=0;j<OvulationDates.length;j++){
+              if( date!=mainOvulationDates[0] ){
+                if(date!=PeriodDates[i]){
+                  if(date!=OvulationDates[j]){
+                    bgcolor=Colors.grey;
+                  }
+                }
+              }
+            }
+          }
+          for(int i=0;i<PeriodDates.length;i++){
+            if(date==PeriodDates[i]){
+              bgcolor=Color(0xFFEA779C);
+            }
+          }
+          for(int i=0;i<OvulationDates.length;i++){
+            if(date==OvulationDates[i]){
+              bgcolor=Color(0xffbc84e9);
+            }
+          }
+          for(int i=0;i<mainOvulationDates.length;i++){
+            if(date==mainOvulationDates[i]){
+              bgcolor=Color(0xffbc84e9);
+            }
+          }
+
+          // for(int i=0;i<PCycle.length;i++){
+          //   for(int j=0;j<OvulationDates.length;j++){
+          //     if(date==PCycle[i] && date!=PeriodDates[i] && date!=OvulationDates[j] && date!=mainOvulationDates[0]){
+          //       bgcolor=Colors.white;
+          //     }
+          //   }
+          // }
+
         });
         events.forEach((event) => print(event.title));
       },
@@ -234,14 +299,12 @@ class _Home_ScreenState extends State<Home_Screen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffbc84e9),
+        backgroundColor: bgcolor,
         centerTitle: true,
-        title:  Text(
-            (_currentDate == _today)
-                ? 'Today, $_today1'
-                : '$_currentDate',
-            style: TextStyle(color: Colors.white, fontSize: 25),
-          ),
+        title: Text(
+          (_currentDate == _today) ? 'Today, $_today1' : '$_currentDate',
+          style: TextStyle(color: Colors.white, fontSize: 25),
+        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -271,7 +334,9 @@ class _Home_ScreenState extends State<Home_Screen> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(height: 80,),
+                      SizedBox(
+                        height: 80,
+                      ),
                       Row(
                         children: <Widget>[
                           TextButton(
@@ -319,11 +384,106 @@ class _Home_ScreenState extends State<Home_Screen> {
           Container(
             height: 100,
             width: double.infinity,
-            decoration: BoxDecoration(color: Color(0xffbc84e9),
-              borderRadius: BorderRadius.vertical(
-                  bottom: Radius.elliptical(50, 40.0)),),
-            child:  Column(
+            decoration: BoxDecoration(
+              color: bgcolor,
+              borderRadius:
+                  BorderRadius.vertical(bottom: Radius.elliptical(50, 40.0)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            '7',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'days to period',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      VerticalDivider(
+                        color: Colors.grey.shade400,
+                        thickness: 2,
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.signal_cellular_alt,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Low',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'chances of',
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                          Text(
+                            'getting pregnant',
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      VerticalDivider(
+                        color: Colors.grey.shade400,
+                        thickness: 2,
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            '$cycleday',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'day of cycle',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
                 Center(
                   child: Text(
                     _currentMonth,
@@ -338,21 +498,31 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
           ),
           Positioned(
-            bottom: 20,
+              bottom: 20,
               left: 150,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white,elevation: 3),
-                  onPressed: (){
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white, elevation: 3),
+                  onPressed: () {
                     setState(() {
-                      _targetDateTime=DateTime.now();
+                      _targetDateTime = DateTime.now();
                     });
-                  }, child: Row(
-                children: [
-                  Icon(Icons.keyboard_return,color: Color(0xffbc84e9),),
-                  SizedBox(width: 5,),
-                  Text('Today',style: TextStyle(color: Color(0xffbc84e9)),)
-                ],
-              )))
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.keyboard_return,
+                        color: Color(0xffbc84e9),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Today',
+                        style: TextStyle(color: Color(0xffbc84e9)),
+                      )
+                    ],
+                  )))
         ],
       ),
     );
