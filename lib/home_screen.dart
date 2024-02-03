@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -15,20 +16,22 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
-  late int avgcyc;
-  late int avgprd;
+   late int avgcyc;
+   late int avgprd;
   String? lastmensis;
   static DateTime? cycleStartDate;
   static DateTime? cycleendDate;
+  static DateTime? periodadder;
+  static DateTime? ovulationadder;
+  static DateTime? mainovule;
   late SharedPreferences preferences;
 
   String _currentDate = DateFormat.yMMMd().format(DateTime.now());
   final String _today = DateFormat.yMMMd().format(DateTime.now());
   final String _today1 = DateFormat.MMMd().format(DateTime.now());
   DateTime _currentDate2 = DateTime.now();
-  String _currentMonth = DateFormat.yMMM().format(DateTime.now());
+  String _currentMonth = DateFormat.MMMM().format(DateTime.now());
   DateTime _targetDateTime = DateTime.now();
-  DateTime _checker =DateTime.now();
 
   static Widget _periodIcon(String day) => Container(
       decoration: BoxDecoration(
@@ -56,31 +59,34 @@ class _Home_ScreenState extends State<Home_Screen> {
         ),
       ));
 
+  static Widget _mainovulationIcon(String day) => Container(
+      decoration:  BoxDecoration(
+          color: Color(0xffbc84e9),
+          borderRadius: BorderRadius.all(Radius.circular(1000)),
+          border: Border.all(color: Color(0xffea779c), width: 4.0)
+      ),
+      child:  Center(
+        child: Text(
+          day,style: TextStyle(color: Colors.white),
+        ),
+      )
+  );
+
   EventList<Event> _markedDateMap = new EventList<Event>(
     events: {},
   );
 
-  List<DateTime> PeriodDates = [
-    DateTime(2024, 02, 1),
-    DateTime(2024, 02, 2),
-    DateTime(2024, 02, 3),
-    DateTime(2024, 02, 4),
-    DateTime(2024, 02, 5),
-  ];
-  List<DateTime> OvulationDates = [
-    DateTime(2024, 02, 21),
-    DateTime(2024, 02, 22),
-    DateTime(2024, 02, 23),
-    DateTime(2024, 02, 24),
-    DateTime(2024, 02, 25),
-    DateTime(2024, 02, 26),
-    DateTime(2024, 02, 27),
-  ];
+  List<DateTime> PeriodDates =[];
+  List<DateTime> mainOvulationDates =[];
+  List<DateTime> OvulationDates =[];
 
 
   @override
   void initState() {
     fetchData();
+    addPeriod();
+    addOvulation();
+    addmainOvulation();
     super.initState();
   }
 
@@ -93,6 +99,38 @@ class _Home_ScreenState extends State<Home_Screen> {
       cycleStartDate = DateTime.parse(lastmensis!);
       cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
     });
+  }
+
+  void addPeriod()async{
+    preferences =await SharedPreferences.getInstance();
+    setState(() {
+      avgprd = preferences.getInt("AvgPeriod")!;
+      PeriodDates.add(DateTime(cycleStartDate!.year,cycleStartDate!.month,cycleStartDate!.day));
+      periodadder = cycleStartDate;
+      for(int i=1;i<avgprd;i++){
+        periodadder = periodadder?.add(Duration(days: 1));
+        PeriodDates.add(DateTime(periodadder!.year,periodadder!.month,periodadder!.day));
+      }
+    });
+
+  }
+
+  void addOvulation(){
+    ovulationadder = cycleendDate?.subtract(Duration(days: 12));
+    for(int i=1;i<8;i++){
+      OvulationDates.add(DateTime(ovulationadder!.year,ovulationadder!.month,ovulationadder!.day));
+      ovulationadder = ovulationadder?.subtract(Duration(days: 1));
+    }
+  }
+
+  void addmainOvulation(){
+    mainovule = cycleendDate?.subtract(Duration(days: 14));
+    mainOvulationDates.add(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
+    for(int i=0;i<OvulationDates.length;i++){
+      if(OvulationDates[i]==mainOvulationDates[0]){
+        OvulationDates.remove(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
+      }
+    }
   }
 
   @override
@@ -118,6 +156,9 @@ class _Home_ScreenState extends State<Home_Screen> {
               icon: _ovulationIcon(
                 OvulationDates[i].day.toString(),
               )));
+    }
+    for(int i=0;i<mainOvulationDates.length;i++){
+      _markedDateMap.add(mainOvulationDates[i], new Event(date: mainOvulationDates[i],title: 'Event 5',icon: _mainovulationIcon(mainOvulationDates[i].day.toString(),)));
     }
 
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -158,7 +199,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       // ),
       showHeader: false,
       todayTextStyle: TextStyle(
-        color: Colors.pink,
+        color: Color(0xff812ac7),
       ),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 1,
@@ -183,7 +224,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       onCalendarChanged: (DateTime date) {
         this.setState(() {
           _targetDateTime = date;
-          _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+          _currentMonth = DateFormat.MMMM().format(_targetDateTime);
         });
       },
       onDayLongPressed: (DateTime date) {
@@ -193,7 +234,14 @@ class _Home_ScreenState extends State<Home_Screen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        backgroundColor: Color(0xffbc84e9),
+        centerTitle: true,
+        title:  Text(
+            (_currentDate == _today)
+                ? 'Today, $_today1'
+                : '$_currentDate',
+            style: TextStyle(color: Colors.white, fontSize: 25),
+          ),
         actions: [
           IconButton(
             icon: Icon(
@@ -223,30 +271,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   ),
                   child: Column(
                     children: [
-                      Text(
-                        (_currentDate == _today)
-                            ? 'Today, $_today1'
-                            : '$_currentDate',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        _currentMonth,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 80,),
                       Row(
                         children: <Widget>[
                           TextButton(
@@ -259,7 +284,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                                 _targetDateTime = DateTime(_targetDateTime.year,
                                     _targetDateTime.month - 1);
                                 _currentMonth =
-                                    DateFormat.yMMM().format(_targetDateTime);
+                                    DateFormat.MMMM().format(_targetDateTime);
                               });
                             },
                           ),
@@ -274,7 +299,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                                 _targetDateTime = DateTime(_targetDateTime.year,
                                     _targetDateTime.month + 1);
                                 _currentMonth =
-                                    DateFormat.yMMM().format(_targetDateTime);
+                                    DateFormat.MMMM().format(_targetDateTime);
                               });
                             },
                           )
@@ -290,15 +315,44 @@ class _Home_ScreenState extends State<Home_Screen> {
                 //
               ],
             ),
-          )
-
-          // Container(
-          //   height: 200,
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(color: Color(0xff812ac7),
-          //     borderRadius: BorderRadius.vertical(
-          //         bottom: Radius.elliptical(50, 50.0)),),
-          // )
+          ),
+          Container(
+            height: 100,
+            width: double.infinity,
+            decoration: BoxDecoration(color: Color(0xffbc84e9),
+              borderRadius: BorderRadius.vertical(
+                  bottom: Radius.elliptical(50, 40.0)),),
+            child:  Column(
+              children: [
+                Center(
+                  child: Text(
+                    _currentMonth,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+              left: 150,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white,elevation: 3),
+                  onPressed: (){
+                    setState(() {
+                      _targetDateTime=DateTime.now();
+                    });
+                  }, child: Row(
+                children: [
+                  Icon(Icons.keyboard_return,color: Color(0xffbc84e9),),
+                  SizedBox(width: 5,),
+                  Text('Today',style: TextStyle(color: Color(0xffbc84e9)),)
+                ],
+              )))
         ],
       ),
     );

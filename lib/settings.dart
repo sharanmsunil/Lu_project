@@ -371,7 +371,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                     style: GoogleFonts.kameron(
                         fontSize: 20, color: Color(0xff812ac7)),
                   )),
-
+              SizedBox(height: 20,),
+              Text('$avgprd')
             ],
           ),
         ),

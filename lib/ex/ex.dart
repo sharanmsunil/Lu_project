@@ -6,6 +6,8 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:scrollable_clean_calendar/utils/extensions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(new MyApp());
 
@@ -58,6 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
   String _currentMonth = DateFormat.yMMM().format(DateTime.now());
   DateTime _targetDateTime = DateTime.now();
   DateTime _checker = DateTime.now();
+  late SharedPreferences preferences;
+   int avgcyc = 28;
+   int avgprd =5 ;
+  String lastmensis ='2024-02-01 00:00:00.000';
+  static DateTime? cycleStartDate;
+  static DateTime? periodadder;
+  static DateTime? ovulationadder;
+  static DateTime? cycleendDate;
+  static DateTime? mainovule;
 
   //List<DateTime> _markedDate = [DateTime(2024, 2, 20), DateTime(2024, 2, 11)];
   static Widget _periodIcon(String day) => Container(
@@ -84,34 +95,102 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     )
   );
+  static Widget _mainovulationIcon(String day) => Container(
+    decoration:  BoxDecoration(
+        color: Color(0xffbc84e9),
+        borderRadius: BorderRadius.all(Radius.circular(1000)),
+        border: Border.all(color: Color(0xff590f9b), width: 2.0)
+      ),
+    child:  Center(
+      child: Text(
+        day,style: TextStyle(color: Colors.white),
+      ),
+    )
+  );
 
   EventList<Event> _markedDateMap = new EventList<Event>(events: {},);
-  List<DateTime> PeriodDates =[
-    DateTime(2024,02,1),
-    DateTime(2024,02,2),
-    DateTime(2024,02,3),
-    DateTime(2024,02,4),
-    DateTime(2024,02,5),
-  ];
-  List<DateTime> OvulationDates =[
-    DateTime(2024,02,21),
-    DateTime(2024,02,22),
-    DateTime(2024,02,23),
-    DateTime(2024,02,24),
-    DateTime(2024,02,25),
-    DateTime(2024,02,26),
-    DateTime(2024,02,27),
-  ];
+
+
+  @override
+  void initState() {
+    fetchData();
+    addPeriod();
+    addOvulation();
+    addmainOvulation();
+    super.initState();
+  }
+
+  void fetchData() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      cycleStartDate = DateTime.parse(lastmensis);
+      cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
+    });
+  }
+
+  void addPeriod(){
+    PeriodDates.add(DateTime(cycleStartDate!.year,cycleStartDate!.month,cycleStartDate!.day));
+    periodadder = cycleStartDate;
+     for(int i=1;i<avgprd;i++){
+      periodadder = periodadder?.add(Duration(days: 1));
+      PeriodDates.add(DateTime(periodadder!.year,periodadder!.month,periodadder!.day));
+    }
+  }
+
+  void addOvulation(){
+    ovulationadder = cycleendDate?.subtract(Duration(days: 12));
+     for(int i=1;i<7;i++){
+       OvulationDates.add(DateTime(ovulationadder!.year,ovulationadder!.month,ovulationadder!.day));
+       ovulationadder = ovulationadder?.subtract(Duration(days: 1));
+    }
+  }
+
+  void addmainOvulation(){
+    mainovule = cycleendDate?.subtract(Duration(days: 14));
+    mainOvulationDates.add(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
+    for(int i=0;i<OvulationDates.length;i++){
+      if(OvulationDates[i]==mainOvulationDates[0]){
+        OvulationDates.remove(DateTime(mainovule!.year,mainovule!.month,mainovule!.day));
+      }
+    }
+  }
+
+  List<DateTime> PeriodDates =[];
+  List<DateTime> mainOvulationDates =[];
+  List<DateTime> OvulationDates =[];
+
+
+  // List<DateTime> PeriodDates =[
+  //   DateTime(2024,02,1),
+  //   DateTime(2024,02,2),
+  //   DateTime(2024,02,3),
+  //   DateTime(2024,02,4),
+  //   DateTime(2024,02,5),
+  // ];
+
+  // List<DateTime> OvulationDates =[
+  //   DateTime(2024,02,21),
+  //   DateTime(2024,02,22),
+  //   DateTime(2024,02,23),
+  //   DateTime(2024,02,24),
+  //   DateTime(2024,02,25),
+  //   DateTime(2024,02,26),
+  //   DateTime(2024,02,27),
+  //   DateTime(2024,02,14),
+  // ];
+
 
   @override
   Widget build(BuildContext context) {
-
     //cHeight = MediaQuery.of(context).size.height;
     for(int i=0;i<PeriodDates.length;i++){
       _markedDateMap.add(PeriodDates[i], new Event(date: PeriodDates[i],title: 'Event 5',icon: _periodIcon(PeriodDates[i].day.toString(),)));
     }
     for(int i=0;i<OvulationDates.length;i++){
       _markedDateMap.add(OvulationDates[i], new Event(date: OvulationDates[i],title: 'Event 5',icon: _ovulationIcon(OvulationDates[i].day.toString(),)));
+    }
+    for(int i=0;i<mainOvulationDates.length;i++){
+      _markedDateMap.add(mainOvulationDates[i], new Event(date: mainOvulationDates[i],title: 'Event 5',icon: _mainovulationIcon(mainOvulationDates[i].day.toString(),)));
     }
     /// Example Calendar Carousel without header and custom prev & next button
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -165,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // selectedDayTextStyle: TextStyle(
       //   color: Colors.yellow,
       // ),
+     // minSelectedDate: DateTime(2023, 10),
       minSelectedDate: DateTime(2023, 10),
       maxSelectedDate: DateTime(2024, 12, 31),
       prevDaysTextStyle: TextStyle(
@@ -257,6 +337,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   _targetDateTime.month + 1);
                               _currentMonth =
                                   DateFormat.yMMM().format(_targetDateTime);
+                              print(lastmensis);
+                              print(cycleStartDate);
+                              print(cycleendDate.toString());
                             });
                           },
                         )
