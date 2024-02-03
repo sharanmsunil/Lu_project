@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Prvs_Mns extends StatefulWidget {
 
@@ -13,6 +14,11 @@ class Prvs_Mns extends StatefulWidget {
 
 class _Prvs_MnsState extends State<Prvs_Mns> {
   late DateTime selectedDate;
+  late SharedPreferences preferences;
+  var prvmensis;
+  var formate1;
+  late bool isANewUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +81,13 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                 initialDate: DateTime(2024,01,01),
                 dateFormat: "dd-MMMM-yyyy",
                 locale: DatePicker.localeFromString('en'),
-                onChange: (DateTime newDate,_) => selectedDate = newDate,
+                onChange: (DateTime newDate,_) {
+                  setState(() {
+                    selectedDate = newDate;
+                    prvmensis = newDate;
+                    formate1 = "${prvmensis.day}-${prvmensis.month}-${prvmensis.year}";
+                  });
+                } ,
                 pickerTheme: DateTimePickerTheme(
                   backgroundColor: Color(0xffbc84e9),
                     itemTextStyle: TextStyle(color: Colors.white,fontSize: 19),
@@ -87,8 +99,11 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
             ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home_Screen()));
+                  onPressed: () async{
+                    preferences = await SharedPreferences.getInstance();
+                    preferences.setBool('newUser', true);
+                    preferences.setString("LastMensis", prvmensis.toString());
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Home_Screen()),(route)=>false);
                   },
                   child: Text(
                     'Continue',

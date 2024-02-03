@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/welcome_screen.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
   late SharedPreferences preferences;
   late int avgcyc;
   late int avgprd;
+  late bool isANewUser;
+
 
   @override
   void initState() {
@@ -50,7 +53,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                Row(
                  children: [
                    IconButton(onPressed: (){
-                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home_Screen()));
+                     Navigator.pop(context);
                    }, icon: Icon(Icons.arrow_back)),
                    SizedBox(width: 110,),
                    Text(
@@ -355,7 +358,19 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                 style:
                 GoogleFonts.kameron(color: Colors.black, fontSize: 20),),
               SizedBox(height: 20,),
-
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 3, minimumSize: Size(220, 50)),
+                  onPressed: () async{
+                    preferences = await SharedPreferences.getInstance();
+                    preferences.setBool('newUser', false);///change to false
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Lu_Welcome()));
+                  },
+                  child: Text(
+                    'Logout',
+                    style: GoogleFonts.kameron(
+                        fontSize: 20, color: Color(0xff812ac7)),
+                  )),
 
             ],
           ),

@@ -1,24 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:luna_loom/average_cycle.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Lu_Welcome(),
-    );
-  }
-}
-
+import 'average_cycle.dart';
+import 'home_screen.dart';
 
 class Lu_Welcome extends StatefulWidget {
   @override
@@ -26,6 +12,7 @@ class Lu_Welcome extends StatefulWidget {
 }
 
 class _Lu_SplashState extends State<Lu_Welcome> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,12 +60,14 @@ class _Lu_SplashState extends State<Lu_Welcome> {
             Container(
               margin: EdgeInsets.only(top: 60),
               child: Text('Welcome!',
-                  style: GoogleFonts.kameron(fontSize: 30, color: Colors.white)),
+                  style:
+                  GoogleFonts.kameron(fontSize: 30, color: Colors.white)),
             ),
             Container(
               margin: EdgeInsets.only(top: 10),
               child: Text('Please answer a few questions and we will',
-                  style: GoogleFonts.kameron(fontSize: 12, color: Colors.white)),
+                  style:
+                  GoogleFonts.kameron(fontSize: 12, color: Colors.white)),
             ),
             Text('Personalize the app for you',
                 style: GoogleFonts.kameron(fontSize: 12, color: Colors.white)),
@@ -88,7 +77,8 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                   style: ElevatedButton.styleFrom(
                       elevation: 3, minimumSize: Size(220, 50)),
                   onPressed: () {
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avg_Cycle()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Avg_Cycle()));
                   },
                   child: Text(
                     'Continue',
@@ -106,38 +96,38 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                       style: GoogleFonts.kameron(
                           fontSize: 10, color: Colors.grey[300]),
                       children: <TextSpan>[
-                    TextSpan(
-                        text: 'terms of Service',
-                        style: GoogleFonts.kameron(
-                            fontSize: 10,
-                            color: Colors.grey[300],
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.grey[300]),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            // code to open / launch terms of service link here
-                          }),
-                    TextSpan(text: '\n                               '),
-                    TextSpan(
-                        text: ' and ',
-                        style: GoogleFonts.kameron(
-                          fontSize: 10,
-                          color: Colors.grey[300],
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'privacy policy',
-                              style: GoogleFonts.kameron(
-                                  fontSize: 10,
-                                  color: Colors.grey[300],
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.grey[300]),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // code to open / launch privacy policy link here
-                                })
-                        ])
-                  ]))),
+                        TextSpan(
+                            text: 'terms of Service',
+                            style: GoogleFonts.kameron(
+                                fontSize: 10,
+                                color: Colors.grey[300],
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.grey[300]),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                // code to open / launch terms of service link here
+                              }),
+                        TextSpan(text: '\n                               '),
+                        TextSpan(
+                            text: ' and ',
+                            style: GoogleFonts.kameron(
+                              fontSize: 10,
+                              color: Colors.grey[300],
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: 'privacy policy',
+                                  style: GoogleFonts.kameron(
+                                      fontSize: 10,
+                                      color: Colors.grey[300],
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Colors.grey[300]),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // code to open / launch privacy policy link here
+                                    })
+                            ])
+                      ]))),
             )
           ],
         ),

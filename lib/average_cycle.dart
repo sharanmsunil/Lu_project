@@ -13,7 +13,7 @@ class Avg_Cycle extends StatefulWidget {
 }
 
 class _Avg_CycleState extends State<Avg_Cycle> {
-  var avgcyc = 28;
+  var avgcyc=28;
   late SharedPreferences preferences;
 
   @override

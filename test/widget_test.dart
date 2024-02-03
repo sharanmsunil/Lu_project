@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:luna_loom/spalsh_welcome.dart';
+import 'package:luna_loom/spalsh_screen.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(Lu_Welcome());
+    await tester.pumpWidget(Lu_Splash());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
