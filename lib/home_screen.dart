@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -18,7 +17,7 @@ class Home_Screen extends StatefulWidget {
 class _Home_ScreenState extends State<Home_Screen> {
   late int avgcyc;
   late int avgprd;
-  late int cycleday=5;
+   int? cycleday;
   String? lastmensis;
   static DateTime? cycleStartDate;
   static DateTime? cycleendDate;
@@ -28,6 +27,9 @@ class _Home_ScreenState extends State<Home_Screen> {
   static DateTime? mainovule;
   late SharedPreferences preferences;
   var bgcolor=Color(0xffbc84e9);
+  var rangeicon = Icon(Icons.signal_cellular_alt_1_bar_outlined,color: Colors.white,);
+  String rangetxt ='Low';
+  String daystoperiod ='Period';
 
   String _currentDate = DateFormat.yMMMd().format(DateTime.now());
   final String _today = DateFormat.yMMMd().format(DateTime.now());
@@ -40,7 +42,6 @@ class _Home_ScreenState extends State<Home_Screen> {
       decoration: BoxDecoration(
         color: Color(0xFFEA779C),
         borderRadius: BorderRadius.all(Radius.circular(1000)),
-        //border: Border.all(color: Colors.blue, width: 2.0)
       ),
       child: Center(
         child: Text(
@@ -53,7 +54,6 @@ class _Home_ScreenState extends State<Home_Screen> {
       decoration: BoxDecoration(
         color: Color(0xffbc84e9),
         borderRadius: BorderRadius.all(Radius.circular(1000)),
-        //border: Border.all(color: Colors.blue, width: 2.0)
       ),
       child: Center(
         child: Text(
@@ -196,72 +196,88 @@ class _Home_ScreenState extends State<Home_Screen> {
       dayPadding: 1,
       isScrollable: true,
       scrollDirection: Axis.vertical,
-      //todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
         setState(() {
           _currentDate2 = date;
           _currentDate = DateFormat.yMMMd().format(date);
-          for(int i=0;i<avgcyc;i++){
-            if(date == PCycle[i]){
-              cycleday=i+1;
+          for (int i = 0; i < avgcyc; i++) {
+            if (date == PCycle[i]) {
+              cycleday = i + 1;
             }
           }
-          for(int i=0;i<PeriodDates.length;i++){
-            for(int j=0;j<OvulationDates.length;j++){
-              if( date!=mainOvulationDates[0] ){
-                if(date!=PeriodDates[i]){
-                  if(date!=OvulationDates[j]){
-                    bgcolor=Colors.grey;
+          for (int i = 0; i < PeriodDates.length; i++) {
+            for (int j = 0; j < OvulationDates.length; j++) {
+              if (date != mainOvulationDates[0]) {
+                if (date != PeriodDates[i]) {
+                  if (date != OvulationDates[j]) {
+                    bgcolor = Colors.grey;
+                    daystoperiod ='Prediction';
                   }
                 }
               }
             }
           }
-          for(int i=0;i<PeriodDates.length;i++){
-            if(date==PeriodDates[i]){
-              bgcolor=Color(0xFFEA779C);
+          for (int i = 0; i < PeriodDates.length; i++) {
+            if (date == PeriodDates[i]) {
+              bgcolor = Color(0xFFEA779C);
+              daystoperiod ='Period';
             }
           }
-          for(int i=0;i<OvulationDates.length;i++){
-            if(date==OvulationDates[i]){
-              bgcolor=Color(0xffbc84e9);
+          for (int i = 0; i < OvulationDates.length; i++) {
+            if (date == OvulationDates[i]) {
+              bgcolor = Color(0xffbc84e9);
+              daystoperiod ='Ovulation';
             }
           }
-          for(int i=0;i<mainOvulationDates.length;i++){
-            if(date==mainOvulationDates[i]){
-              bgcolor=Color(0xffbc84e9);
+          for (int i = 0; i < mainOvulationDates.length; i++) {
+            if (date == mainOvulationDates[i]) {
+              bgcolor = Color(0xffbc84e9);
+              daystoperiod ='Ovulation';
             }
           }
+          for (int i = 1; i <= 2; i++) {
+              if (date == OvulationDates[i]) {
+                  rangeicon = Icon(Icons.signal_cellular_alt,
+                    color: Colors.white,);
+                  rangetxt='High';
+            }
+          }
+          for(int i=3;i<6;i++){
+            if (date == OvulationDates[i]) {
+              rangeicon = Icon(Icons.signal_cellular_alt_2_bar,
+                color: Colors.white,);
+              rangetxt='Medium';
+            }}
 
-          // for(int i=0;i<PCycle.length;i++){
-          //   for(int j=0;j<OvulationDates.length;j++){
-          //     if(date==PCycle[i] && date!=PeriodDates[i] && date!=OvulationDates[j] && date!=mainOvulationDates[0]){
-          //       bgcolor=Colors.white;
-          //     }
-          //   }
-          // }
-
+          if (date == mainOvulationDates[0]) {
+            rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
+            rangetxt='High';
+          }
+          if (date == OvulationDates[0]) {
+            rangeicon =
+                Icon(Icons.signal_cellular_alt_2_bar, color: Colors.white,);
+            rangetxt='Medium';
+          }
+            if (date != OvulationDates[0]&&date != OvulationDates[1]&&
+                date != OvulationDates[2]&&date != OvulationDates[3]&&
+                date != OvulationDates[4]&&date != OvulationDates[5]&&
+                date != mainOvulationDates[0]) {
+              rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
+                color: Colors.white,);
+            rangetxt='Low';}
         });
         events.forEach((event) => print(event.title));
       },
-      //daysHaveCircularBorder: true,
       showOnlyCurrentMonthDate: true,
 
       thisMonthDayBorderColor: Colors.grey,
       weekFormat: false,
-//      firstDayOfWeek: 4,
       markedDatesMap: _markedDateMap,
 
       height: 500,
       selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
       customGridViewPhysics: ScrollPhysics(),
-      // markedDateCustomShapeBorder:
-      //     CircleBorder(side: BorderSide(color: Colors.purple)),
-      // markedDateCustomTextStyle: TextStyle(
-      //   fontSize: 15,
-      //   color: Colors.purple,
-      // ),
       showHeader: false,
       todayTextStyle: TextStyle(
         color: Color(0xff812ac7),
@@ -273,19 +289,12 @@ class _Home_ScreenState extends State<Home_Screen> {
       },
       markedDateMoreShowTotal: null,
       todayButtonColor: Colors.grey.shade300,
-      // selectedDayTextStyle: TextStyle(
-      //   color: Colors.yellow,
-      // ),
       minSelectedDate: DateTime(2023, 10),
       maxSelectedDate: DateTime(2024, 12, 31),
       prevDaysTextStyle: TextStyle(
         fontSize: 16,
         color: Colors.black,
       ),
-      // inactiveDaysTextStyle: TextStyle(
-      //   color: Colors.tealAccent,
-      //   fontSize: 16,
-      // ),
       onCalendarChanged: (DateTime date) {
         this.setState(() {
           _targetDateTime = date;
@@ -396,21 +405,16 @@ class _Home_ScreenState extends State<Home_Screen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            '7',
-                            style: TextStyle(color: Colors.white),
+                          Wrap(
+                            children: [
+                              Text(
+                                daystoperiod,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(width: 5,)
+                            ],
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'days to period',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
+
                       SizedBox(
                         width: 5,
                       ),
@@ -426,15 +430,12 @@ class _Home_ScreenState extends State<Home_Screen> {
                         children: [
                           Row(
                             children: [
-                              Icon(
-                                Icons.signal_cellular_alt,
-                                color: Colors.white,
-                              ),
+                              rangeicon,
                               SizedBox(
                                 width: 5,
                               ),
                               Text(
-                                'Low',
+                                rangetxt,
                                 style: TextStyle(color: Colors.white),
                               ),
                             ],
