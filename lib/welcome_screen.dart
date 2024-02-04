@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'average_cycle.dart';
-import 'home_screen.dart';
 class Lu_Welcome extends StatefulWidget {
   @override
   State<Lu_Welcome> createState() => _Lu_SplashState();

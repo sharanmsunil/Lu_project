@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:luna_loom/average_cycle.dart';
 import 'package:luna_loom/home_screen.dart';
 import 'package:luna_loom/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +45,7 @@ class _Lu_SplashState extends State<Lu_Splash> {
        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Lu_Welcome()));
      });
     }else if (isANewUser == true){
-      Future.delayed(Duration(seconds: 5),(){
+      Future.delayed(Duration(seconds: 3),(){
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => Home_Screen()));
       });

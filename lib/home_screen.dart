@@ -408,6 +408,7 @@ class _Home_ScreenState extends State<Home_Screen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: bgcolor,
         centerTitle: true,
         title: Text(
@@ -422,7 +423,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Lu_Settings()));
+                  .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Lu_Settings()),(route)=>false);
             },
           )
         ],

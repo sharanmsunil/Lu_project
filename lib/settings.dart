@@ -53,7 +53,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                Row(
                  children: [
                    IconButton(onPressed: (){
-                     Navigator.pop(context);
+                     // Navigator.of(context).pop();
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Home_Screen()));
                    }, icon: Icon(Icons.arrow_back)),
                    SizedBox(width: 110,),
                    Text(
