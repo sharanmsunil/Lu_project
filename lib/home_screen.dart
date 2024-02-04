@@ -25,6 +25,8 @@ class _Home_ScreenState extends State<Home_Screen> {
   static DateTime? PCycleAdder;
   static DateTime? ovulationadder;
   static DateTime? mainovule;
+  static DateTime? NxtcycleStartDate;
+  static DateTime? NxtcycleendDate;
   late SharedPreferences preferences;
   var bgcolor=Color(0xffbc84e9);
   var rangeicon = Icon(Icons.signal_cellular_alt_1_bar_outlined,color: Colors.white,);
@@ -90,6 +92,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     addOvulation();
     addmainOvulation();
     addCycleDate();
+    addCycleloop();
     super.initState();
   }
 
@@ -166,6 +169,51 @@ class _Home_ScreenState extends State<Home_Screen> {
         PCycleAdder = PCycleAdder?.add(Duration(days: 1));
       }
     });
+  }
+
+  void addCycleloop() async{
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      avgcyc = preferences.getInt("AvgCycle")!;
+      avgprd = preferences.getInt("AvgPeriod")!;
+      lastmensis = preferences.getString("LastMensis")!;
+      cycleStartDate = DateTime.parse(lastmensis!);
+      cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
+      NxtcycleStartDate = cycleStartDate?.add(Duration(days: avgcyc));
+      NxtcycleendDate = NxtcycleStartDate?.add(Duration(days: avgcyc - 1));
+      for(int i=1;i<10;i++) {
+        PeriodDates.add(DateTime(
+            NxtcycleStartDate!.year, NxtcycleStartDate!.month, NxtcycleStartDate!.day));
+        periodadder = NxtcycleStartDate;
+        for (int i = 1; i < avgprd; i++) {
+          periodadder = periodadder?.add(Duration(days: 1));
+          PeriodDates.add(
+              DateTime(periodadder!.year, periodadder!.month, periodadder!.day));
+        }
+        ovulationadder = NxtcycleendDate?.subtract(Duration(days: 12));
+        for (int i = 1; i < 8; i++) {
+          OvulationDates.add(DateTime(
+              ovulationadder!.year, ovulationadder!.month, ovulationadder!.day));
+          ovulationadder = ovulationadder?.subtract(Duration(days: 1));
+        }
+        mainovule = NxtcycleendDate?.subtract(Duration(days: 14));
+        mainOvulationDates.add(DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+        for (int i = 0; i < OvulationDates.length; i++) {
+          for(int j=0;j<mainOvulationDates.length;j++){
+            if (OvulationDates[i] == mainOvulationDates[j]) {
+              OvulationDates.remove(
+                  DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+            }
+          }
+        }
+        PCycleAdder = NxtcycleStartDate;
+        for(int i = 0;i< avgcyc;i++){
+          PCycle.add(DateTime(PCycleAdder!.year,PCycleAdder!.month,PCycleAdder!.day,));
+          PCycleAdder = PCycleAdder?.add(Duration(days: 1));
+        }
+        NxtcycleStartDate = NxtcycleStartDate?.add(Duration(days: avgcyc));
+        NxtcycleendDate = NxtcycleStartDate?.add(Duration(days: avgcyc - 1));
+      }});
   }
 
 
