@@ -181,7 +181,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
       NxtcycleStartDate = cycleStartDate?.add(Duration(days: avgcyc));
       NxtcycleendDate = NxtcycleStartDate?.add(Duration(days: avgcyc - 1));
-      for(int i=1;i<10;i++) {
+      for(int i=1;i<12;i++) {
         PeriodDates.add(DateTime(
             NxtcycleStartDate!.year, NxtcycleStartDate!.month, NxtcycleStartDate!.day));
         periodadder = NxtcycleStartDate;
@@ -251,6 +251,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     }
 
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
+      firstDayOfWeek: DateTime.monday,
       viewportFraction: .7,
       selectedDayButtonColor: Colors.grey.shade300,
       weekdayTextStyle: TextStyle(color: Colors.grey),
@@ -264,9 +265,44 @@ class _Home_ScreenState extends State<Home_Screen> {
         setState(() {
           _currentDate2 = date;
           _currentDate = DateFormat.yMMMd().format(date);
-          for (int i = 0; i < avgcyc; i++) {
+          for (int i = 0; i < PCycle.length; i++) {
             if (date == PCycle[i]) {
+              if(i<avgcyc){
               cycleday = i + 1;
+            }else if(avgcyc<=i && i<avgcyc+avgcyc){
+                int j=i-avgcyc;
+                cycleday=j+1;
+              }else if(avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
+                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+                cycleday = j + 1;
+              }
             }
           }
           for (int i = 0; i < PeriodDates.length; i++) {

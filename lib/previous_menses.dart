@@ -102,7 +102,13 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
                     preferences.setBool('newUser', true);
-                    preferences.setString("LastMensis", prvmensis.toString());
+                    if(prvmensis==null){
+                      String backupdate ='2024-01-01 00:00:00.000';
+                      prvmensis=DateTime.parse(backupdate);
+                      preferences.setString("LastMensis", prvmensis.toString());
+                    }else {
+                      preferences.setString("LastMensis", prvmensis.toString());
+                    }
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Home_Screen()),(route)=>false);
                   },
                   child: Text(
