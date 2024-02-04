@@ -17,7 +17,7 @@ class Home_Screen extends StatefulWidget {
 class _Home_ScreenState extends State<Home_Screen> {
   late int avgcyc;
   late int avgprd;
-   int? cycleday;
+   int? cycleday=0;
   String? lastmensis;
   static DateTime? cycleStartDate;
   static DateTime? cycleendDate;
@@ -108,6 +108,8 @@ class _Home_ScreenState extends State<Home_Screen> {
     preferences = await SharedPreferences.getInstance();
     setState(() {
       avgprd = preferences.getInt("AvgPeriod")!;
+      lastmensis = preferences.getString("LastMensis")!;
+      cycleStartDate = DateTime.parse(lastmensis!);
       PeriodDates.add(DateTime(
           cycleStartDate!.year, cycleStartDate!.month, cycleStartDate!.day));
       periodadder = cycleStartDate;
@@ -119,31 +121,45 @@ class _Home_ScreenState extends State<Home_Screen> {
     });
   }
 
-  void addOvulation() {
-    ovulationadder = cycleendDate?.subtract(Duration(days: 12));
-    for (int i = 1; i < 8; i++) {
-      OvulationDates.add(DateTime(
-          ovulationadder!.year, ovulationadder!.month, ovulationadder!.day));
-      ovulationadder = ovulationadder?.subtract(Duration(days: 1));
-    }
+  void addOvulation() async{
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      lastmensis = preferences.getString("LastMensis")!;
+      cycleStartDate = DateTime.parse(lastmensis!);
+      cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
+      ovulationadder = cycleendDate?.subtract(Duration(days: 12));
+      for (int i = 1; i < 8; i++) {
+        OvulationDates.add(DateTime(
+            ovulationadder!.year, ovulationadder!.month, ovulationadder!.day));
+        ovulationadder = ovulationadder?.subtract(Duration(days: 1));
+      }
+    });
   }
 
-  void addmainOvulation() {
-    mainovule = cycleendDate?.subtract(Duration(days: 14));
-    mainOvulationDates
-        .add(DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
-    for (int i = 0; i < OvulationDates.length; i++) {
-      if (OvulationDates[i] == mainOvulationDates[0]) {
-        OvulationDates.remove(
-            DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+  void addmainOvulation() async{
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      lastmensis = preferences.getString("LastMensis")!;
+      cycleStartDate = DateTime.parse(lastmensis!);
+      avgcyc = preferences.getInt("AvgCycle")!;
+      cycleendDate = cycleStartDate?.add(Duration(days: avgcyc - 1));
+      mainovule = cycleendDate?.subtract(Duration(days: 14));
+      mainOvulationDates.add(DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+      for (int i = 0; i < OvulationDates.length; i++) {
+        if (OvulationDates[i] == mainOvulationDates[0]) {
+          OvulationDates.remove(
+              DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
+        }
       }
-    }
+    });
   }
 
   void addCycleDate() async{
     preferences = await SharedPreferences.getInstance();
     setState(() {
       avgcyc = preferences.getInt("AvgCycle")!;
+      lastmensis = preferences.getString("LastMensis")!;
+      cycleStartDate = DateTime.parse(lastmensis!);
       PCycleAdder = cycleStartDate;
       for(int i = 0;i< avgcyc;i++){
         PCycle.add(DateTime(PCycleAdder!.year,PCycleAdder!.month,PCycleAdder!.day,));

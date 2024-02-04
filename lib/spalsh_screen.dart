@@ -43,12 +43,14 @@ class _Lu_SplashState extends State<Lu_Splash> {
     var preferences = await SharedPreferences.getInstance();
     isANewUser = preferences.getBool('newUser')! ;
     if (isANewUser == false) {
-     Timer(Duration(seconds: 3),(){
+     Future.delayed(Duration(seconds: 3),(){
        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Lu_Welcome()));
      });
     }else if (isANewUser == true){
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Home_Screen()));
+      Future.delayed(Duration(seconds: 5),(){
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Home_Screen()));
+      });
     }
   }
   @override
