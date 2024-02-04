@@ -25,6 +25,7 @@ class _Home_ScreenState extends State<Home_Screen> {
   static DateTime? PCycleAdder;
   static DateTime? ovulationadder;
   static DateTime? mainovule;
+  static DateTime? highovule;
   static DateTime? NxtcycleStartDate;
   static DateTime? NxtcycleendDate;
   late SharedPreferences preferences;
@@ -82,6 +83,7 @@ class _Home_ScreenState extends State<Home_Screen> {
 
   List<DateTime> PeriodDates = [];
   List<DateTime> mainOvulationDates = [];
+  List<DateTime> highOvulationDates = [];
   List<DateTime> OvulationDates = [];
   List<DateTime> PCycle = [];
 
@@ -154,6 +156,19 @@ class _Home_ScreenState extends State<Home_Screen> {
               DateTime(mainovule!.year, mainovule!.month, mainovule!.day));
         }
       }
+      highovule = cycleendDate?.subtract(Duration(days: 13));
+      for(int i=1;i<=2;i++) {
+        highOvulationDates.add(DateTime(highovule!.year, highovule!.month, highovule!.day));
+        highovule=cycleendDate?.subtract(Duration(days: 15));
+      }
+      for (int i = 0; i < OvulationDates.length; i++) {
+        for(int j=0;j<highOvulationDates.length;j++){
+          if (OvulationDates[i] == highOvulationDates[j]) {
+            highovule=highOvulationDates[j];
+            OvulationDates.remove(DateTime(highovule!.year, highovule!.month, highovule!.day));
+          }
+        }
+      }
     });
   }
 
@@ -206,6 +221,19 @@ class _Home_ScreenState extends State<Home_Screen> {
             }
           }
         }
+        highovule = NxtcycleendDate?.subtract(Duration(days: 13));
+        for(int i=1;i<=2;i++) {
+          highOvulationDates.add(DateTime(highovule!.year, highovule!.month, highovule!.day));
+          highovule=NxtcycleendDate?.subtract(Duration(days: 15));
+        }
+        for (int i = 0; i < OvulationDates.length; i++) {
+          for(int j=0;j<highOvulationDates.length;j++){
+            if (OvulationDates[i] == highOvulationDates[j]) {
+              highovule=highOvulationDates[j];
+              OvulationDates.remove(DateTime(highovule!.year, highovule!.month, highovule!.day));
+            }
+          }
+        }
         PCycleAdder = NxtcycleStartDate;
         for(int i = 0;i< avgcyc;i++){
           PCycle.add(DateTime(PCycleAdder!.year,PCycleAdder!.month,PCycleAdder!.day,));
@@ -247,6 +275,16 @@ class _Home_ScreenState extends State<Home_Screen> {
               title: 'Event 5',
               icon: _mainovulationIcon(
                 mainOvulationDates[i].day.toString(),
+              )));
+    }
+    for (int i = 0; i < highOvulationDates.length; i++) {
+      _markedDateMap.add(
+          highOvulationDates[i],
+          new Event(
+              date: highOvulationDates[i],
+              title: 'Event 5',
+              icon: _ovulationIcon(
+                highOvulationDates[i].day.toString(),
               )));
     }
 
@@ -312,6 +350,9 @@ class _Home_ScreenState extends State<Home_Screen> {
                   if (date != OvulationDates[j]) {
                     bgcolor = Colors.grey;
                     daystoperiod ='Prediction';
+                    rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
+                               color: Colors.white,);
+                           rangetxt='Low';
                   }
                 }
               }
@@ -321,50 +362,36 @@ class _Home_ScreenState extends State<Home_Screen> {
             if (date == PeriodDates[i]) {
               bgcolor = Color(0xFFEA779C);
               daystoperiod ='Period';
+              rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
+                color: Colors.white,);
+              rangetxt='Low';
             }
           }
           for (int i = 0; i < OvulationDates.length; i++) {
             if (date == OvulationDates[i]) {
               bgcolor = Color(0xffbc84e9);
               daystoperiod ='Ovulation';
+              rangeicon = Icon(Icons.signal_cellular_alt_2_bar,
+                        color: Colors.white,);
+                       rangetxt='Medium';
+            }
+          }
+          for (int i = 0; i < highOvulationDates.length; i++) {
+            if (date == highOvulationDates[i]) {
+              bgcolor = Color(0xffbc84e9);
+              daystoperiod ='Ovulation';
+              rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
+              rangetxt='High';
             }
           }
           for (int i = 0; i < mainOvulationDates.length; i++) {
             if (date == mainOvulationDates[i]) {
               bgcolor = Color(0xffbc84e9);
               daystoperiod ='Ovulation';
+              rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
+              rangetxt='High';
             }
           }
-          for (int i = 1; i <= 2; i++) {
-              if (date == OvulationDates[i]) {
-                  rangeicon = Icon(Icons.signal_cellular_alt,
-                    color: Colors.white,);
-                  rangetxt='High';
-            }
-          }
-          for(int i=3;i<6;i++){
-            if (date == OvulationDates[i]) {
-              rangeicon = Icon(Icons.signal_cellular_alt_2_bar,
-                color: Colors.white,);
-              rangetxt='Medium';
-            }}
-
-          if (date == mainOvulationDates[0]) {
-            rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
-            rangetxt='High';
-          }
-          if (date == OvulationDates[0]) {
-            rangeicon =
-                Icon(Icons.signal_cellular_alt_2_bar, color: Colors.white,);
-            rangetxt='Medium';
-          }
-            if (date != OvulationDates[0]&&date != OvulationDates[1]&&
-                date != OvulationDates[2]&&date != OvulationDates[3]&&
-                date != OvulationDates[4]&&date != OvulationDates[5]&&
-                date != mainOvulationDates[0]) {
-              rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
-                color: Colors.white,);
-            rangetxt='Low';}
         });
         events.forEach((event) => print(event.title));
       },
