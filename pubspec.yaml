@@ -44,6 +44,7 @@ dependencies:
   table_calendar: ^3.0.9
   flutter_calendar_carousel: ^2.4.2
   dotted_border: ^2.1.0
+  vibration: ^1.8.4
 
 
 dev_dependencies:

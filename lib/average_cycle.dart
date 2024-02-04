@@ -105,6 +105,7 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                 )),
                 Container(
                   child: NumberPicker(
+                      haptics: true,
                       minValue: 20,
                       maxValue: 50,
                       value: avgcyc,
@@ -136,7 +137,13 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                       preferences = await SharedPreferences.getInstance();
                       int averagecycle = avgcyc;
                       preferences.setInt("AvgCycle", averagecycle);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avg_Period()));
+                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                        return Avg_Period();
+                      },
+                          transitionsBuilder: (context,an1,an2,child){
+                            return FadeTransition(opacity: an1,child: child,);
+                          },
+                          transitionDuration: Duration(milliseconds: 200)));
                   },
                   child: Text(
                     'Continue',
@@ -151,7 +158,13 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                     preferences = await SharedPreferences.getInstance();
                     int averagecycle = avgcyc;
                     preferences.setInt("AvgCycle", averagecycle);
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avg_Period()));
+                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return Avg_Period();
+                    },
+                        transitionsBuilder: (context,an1,an2,child){
+                          return FadeTransition(opacity: an1,child: child,);
+                        },
+                        transitionDuration: Duration(milliseconds: 200)));
                   },
                   child: Text(
                     "I don't remember",

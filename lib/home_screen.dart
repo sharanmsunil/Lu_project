@@ -450,7 +450,13 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Lu_Settings()),(route)=>false);
+                  .pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                return Lu_Settings();
+              },
+                  transitionsBuilder: (context,an1,an2,child){
+                    return FadeTransition(opacity: an1,child: child,);
+                  },
+                  transitionDuration: Duration(milliseconds: 100)),(route)=>false);
             },
           )
         ],
@@ -533,80 +539,74 @@ class _Home_ScreenState extends State<Home_Screen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                          Wrap(
-                            children: [
-                              Text(
-                                daystoperiod,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              SizedBox(width: 5,)
-                            ],
+                      Container(
+                        height: 60,
+                        width: 85,
+                        child: Center(
+                          child: Text(
+                            daystoperiod,
+                            style: TextStyle(color: Colors.white),
                           ),
-
-                      SizedBox(
-                        width: 5,
+                        ),
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
                         thickness: 2,
                         width: 20,
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Column(
-                        children: [
-                          Row(
+                      Container(
+                        height: 60,
+                        width: 85,
+                        child: Center(
+                          child: Column(
                             children: [
-                              rangeicon,
-                              SizedBox(
-                                width: 5,
+                              Row(
+                                children: [
+                                  rangeicon,
+                                  SizedBox(width: 5,),
+                                  Text(
+                                    rangetxt,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5,),
+                              Text(
+                                'chances of',
+                                style: TextStyle(color: Colors.white, fontSize: 10),
                               ),
                               Text(
-                                rangetxt,
-                                style: TextStyle(color: Colors.white),
+                                'getting pregnant',
+                                style: TextStyle(color: Colors.white, fontSize: 10),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'chances of',
-                            style: TextStyle(color: Colors.white, fontSize: 10),
-                          ),
-                          Text(
-                            'getting pregnant',
-                            style: TextStyle(color: Colors.white, fontSize: 10),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 5,
+                        ),
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
                         thickness: 2,
                         width: 20,
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '$cycleday',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'day of cycle',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                     Container(
+                       height: 60,
+                       width: 85,
+                       child: Center(
+                         child: Column(
+                           children: [
+                             Text(
+                               '$cycleday',
+                               style: TextStyle(color: Colors.white),
+                             ),
+                             SizedBox(height: 5,),
+                             Text(
+                               'day of cycle',
+                               style: TextStyle(color: Colors.white),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ),
                     ],
                   ),
                 ),

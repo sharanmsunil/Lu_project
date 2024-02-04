@@ -106,6 +106,7 @@ class _Avg_PeriodState extends State<Avg_Period> {
                 )),
                 Container(
                   child: NumberPicker(
+                      haptics: true,
                       minValue: 1,
                       maxValue: 20,
                       value: avgprd,
@@ -137,7 +138,13 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     preferences = await SharedPreferences.getInstance();
                     int averageperiod = avgprd;
                     preferences.setInt("AvgPeriod", averageperiod);
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Prvs_Mns()));
+                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return Prvs_Mns();
+                    },
+                        transitionsBuilder: (context,an1,an2,child){
+                          return FadeTransition(opacity: an1,child: child,);
+                        },
+                        transitionDuration: Duration(milliseconds: 200)));
                   },
                   child: Text(
                     'Continue',
@@ -152,7 +159,13 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     preferences = await SharedPreferences.getInstance();
                     int averageperiod = avgprd;
                     preferences.setInt("AvgPeriod", averageperiod);
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Prvs_Mns()));
+                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return Prvs_Mns();
+                    },
+                        transitionsBuilder: (context,an1,an2,child){
+                          return FadeTransition(opacity: an1,child: child,);
+                        },
+                        transitionDuration: Duration(milliseconds: 200)));
                   },
                   child: Text(
                     "I don't remember",
