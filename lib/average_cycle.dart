@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 import 'average_period.dart';
 
@@ -119,9 +120,12 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                       ),
                       textStyle:
                           TextStyle(color: Color(0xffbc84e9), fontSize: 15),
-                      onChanged: (value) => setState(
-                            () => avgcyc = value,
-                          )),
+                      onChanged: (value)  {setState(
+                            () {
+                              avgcyc = value;
+                              Vibration.vibrate(duration: 10,);
+                            }
+                          );}),
                 ),
               ],
             ),

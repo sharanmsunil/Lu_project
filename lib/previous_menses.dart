@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:luna_loom/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 class Prvs_Mns extends StatefulWidget {
 
@@ -76,7 +77,7 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: DatePickerWidget(
                 looping: false,
-                firstDate: DateTime(2020,01,01),
+                firstDate: DateTime(2023, 10),
                 lastDate: DateTime.now(),
                 initialDate: DateTime(2024,01,01),
                 dateFormat: "dd-MMMM-yyyy",
@@ -86,6 +87,7 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                     selectedDate = newDate;
                     prvmensis = newDate;
                     formate1 = "${prvmensis.day}-${prvmensis.month}-${prvmensis.year}";
+                    Vibration.vibrate(duration: 10,);
                   });
                 } ,
                 pickerTheme: DateTimePickerTheme(

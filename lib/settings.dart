@@ -131,7 +131,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             ),
                                           ),
                                           NumberPicker(
-                                            haptics: true,
+                                            //haptics: true,
                                               minValue: 20,
                                               maxValue: 50,
                                               value: avgcyc,
@@ -147,8 +147,8 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                                   color: Colors.grey[400],
                                                   fontSize: 15),
                                               onChanged: (value) {
-                                                HapticFeedback.heavyImpact();
-                                                Vibration.vibrate();
+                                                //HapticFeedback.heavyImpact();
+                                                Vibration.vibrate(duration: 10,);
                                                 setState(() {
                                                   avgcyc = value;
                                                 });
@@ -260,11 +260,13 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                               textStyle: TextStyle(
                                                   color: Colors.grey[400],
                                                   fontSize: 15),
-                                              onChanged: (value) => setState(
-                                                    () => avgprd
-                                                        //widget.avgprd
-                                                        = value,
-                                                  )),
+                                              onChanged: (value)  {setState(
+                                                    ()  {
+                                                      avgprd = value;
+                                                      Vibration.vibrate(duration: 10,);
+                                                    }
+
+                                                  );}),
                                         ],
                                       ),
                                     ],
@@ -416,7 +418,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      elevation: 3, minimumSize: Size(220, 50)),
+                      elevation: 1, minimumSize: Size(150, 40)),
                   onPressed: () async {
                     preferences = await SharedPreferences.getInstance();
                     preferences.setBool('newUser', false);
@@ -438,7 +440,6 @@ class _Lu_SettingsState extends State<Lu_Settings> {
               SizedBox(
                 height: 20,
               ),
-              Text('$avgprd')
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/previous_menses.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 class Avg_Period extends StatefulWidget {
 
@@ -120,9 +121,12 @@ class _Avg_PeriodState extends State<Avg_Period> {
                       ),
                       textStyle:
                           TextStyle(color: Color(0xffbc84e9), fontSize: 15),
-                      onChanged: (value) => setState(
-                            () => avgprd = value,
-                          )),
+                      onChanged: (value) {setState(
+                            () {
+                              avgprd = value;
+                              Vibration.vibrate(duration: 10,);
+                            }
+                          );}),
                 ),
               ],
             ),
