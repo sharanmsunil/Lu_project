@@ -450,13 +450,19 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                return Lu_Settings();
-              },
-                  transitionsBuilder: (context,an1,an2,child){
-                    return FadeTransition(opacity: an1,child: child,);
-                  },
-                  transitionDuration: Duration(milliseconds: 100)),(route)=>false);
+                  .pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => Lu_Settings(),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  }),(route)=>false);
             },
           )
         ],

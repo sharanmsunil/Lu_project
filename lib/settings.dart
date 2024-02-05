@@ -41,8 +41,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return  Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +59,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                             transitionsBuilder: (context,an1,an2,child){
                               return FadeTransition(opacity: an1,child: child,);
                             },
-                            transitionDuration: Duration(milliseconds: 100)));
+                            transitionDuration: Duration(milliseconds: 800)));
                       },
                       icon: Icon(Icons.arrow_back)),
                   SizedBox(
@@ -443,7 +442,6 @@ class _Lu_SettingsState extends State<Lu_Settings> {
             ],
           ),
         ),
-      ),
     );
   }
 }
