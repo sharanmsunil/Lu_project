@@ -7,7 +7,7 @@ import 'package:luna_loom/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Lu_Splash(),
     );
@@ -41,11 +41,11 @@ class _Lu_SplashState extends State<Lu_Splash> {
     var preferences = await SharedPreferences.getInstance();
     isANewUser = preferences.getBool('newUser')! ;
     if (isANewUser == false) {
-     Future.delayed(Duration(seconds: 3),(){
+     Future.delayed(const Duration(seconds: 3),(){
        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Lu_Welcome()));
      });
     }else if (isANewUser == true){
-      Future.delayed(Duration(seconds: 3),(){
+      Future.delayed(const Duration(seconds: 3),(){
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => Home_Screen()));
       });
@@ -66,7 +66,7 @@ class _Lu_SplashState extends State<Lu_Splash> {
                 height: 150,
                 width: 150,
                 child: Image.asset(
-                  'assets/Lu/logo - Copy.png',
+                  'assets/Lu/logo.png',
                 ),
               ),
             ),

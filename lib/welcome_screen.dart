@@ -28,7 +28,7 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                     height: 150,
                     width: 150,
                     child: Image.asset(
-                      'assets/Lu/logo - Copy.png',
+                      'assets/Lu/logo.png',
                     ),
                   ),
                 ),

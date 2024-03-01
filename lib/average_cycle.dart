@@ -35,7 +35,7 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                     height: 150,
                     width: 150,
                     child: Image.asset(
-                      'assets/Lu/logo - Copy.png',
+                      'assets/Lu/logo.png',
                     ),
                   ),
                 ),

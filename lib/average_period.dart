@@ -36,7 +36,7 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     height: 150,
                     width: 150,
                     child: Image.asset(
-                      'assets/Lu/logo - Copy.png',
+                      'assets/Lu/logo.png',
                     ),
                   ),
                 ),
