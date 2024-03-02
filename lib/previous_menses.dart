@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/utils/lu_colors.dart';
+import 'package:luna_loom/widgets/logo_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
@@ -23,55 +25,20 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffbc84e9),
+      backgroundColor: LuColors.bgColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: Stack(alignment: Alignment.center, children: [
-                Positioned(
-                  top: 50,
-                  child: SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: Image.asset(
-                      'assets/Lu/logo.png',
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 30,
-                  child: Text('Lu',
-                      style: GoogleFonts.kolkerBrush(
-                          fontSize: 130, color: Color(0xff812ac7))),
-                ),
-                Positioned(
-                    top: 190,
-                    child: Text(
-                      'LunaLoom',
-                      style: GoogleFonts.kameron(
-                          fontSize: 45, color: Colors.white),
-                    )),
-                Positioned(
-                    top: 240,
-                    child: Text(
-                      'Illuminate Your Monthly Rhythm',
-                      style: GoogleFonts.kameron(
-                          fontSize: 10, color: Colors.white),
-                    )),
-              ]),
-            ),
+            LogoWidget(),
             Container(
               margin: EdgeInsets.only(top: 30),
               child: Text('When did your previous',
                   style:
-                      GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
+                      GoogleFonts.kameron(fontSize: 20, color: LuColors.textWhiteColor)),
             ),
             Text('menses begin?',
-                style: GoogleFonts.kameron(fontSize: 20, color: Colors.white)),
+                style: GoogleFonts.kameron(fontSize: 20, color: LuColors.textWhiteColor)),
             SizedBox(height: 20,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 25),
@@ -91,15 +58,16 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                   });
                 } ,
                 pickerTheme: DateTimePickerTheme(
-                  backgroundColor: Color(0xffbc84e9),
-                    itemTextStyle: TextStyle(color: Colors.white,fontSize: 19),
-                    dividerColor: Color(0xff812ac7),
+                  backgroundColor: LuColors.bgColor,
+                    itemTextStyle: TextStyle(color: LuColors.textWhiteColor,fontSize: 19),
+                    dividerColor: LuColors.logoColor,
                 ),
               ),
             ),
         SizedBox(height: 30,),
             ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: LuColors.textWhiteColor,
                       elevation: 3, minimumSize: Size(220, 50)),
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
@@ -116,7 +84,7 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                   child: Text(
                     'Continue',
                     style: GoogleFonts.kameron(
-                        fontSize: 20, color: Color(0xff812ac7)),
+                        fontSize: 20, color: LuColors.textPurpleColor),
                   )),
           ],
         ),

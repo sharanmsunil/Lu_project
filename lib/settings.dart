@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/utils/lu_colors.dart';
 import 'package:luna_loom/welcome_screen.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,9 +16,9 @@ class Lu_Settings extends StatefulWidget {
 
 class _Lu_SettingsState extends State<Lu_Settings> {
   late SharedPreferences preferences;
-  late int avgcyc;
-  late int avgprd;
-  late bool isANewUser;
+  int avgcyc = 28;
+  int avgprd =8;
+  bool isANewUser = false;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: LuColors.textWhiteColor,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -85,6 +87,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: LuColors.textWhiteColor,
                       elevation: 1, minimumSize: Size(300, 40)),
                   onPressed: () {
                     showDialog(
@@ -172,7 +175,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                   child: Text(
                                 'Select',
                                 style: GoogleFonts.kameron(
-                                    fontSize: 15, color: Color(0xff812ac7)),
+                                    fontSize: 15, color: LuColors.textPurpleColor),
                               )),
                             ),
                           ],
@@ -183,7 +186,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                   child: Text(
                     "$avgcyc days",
                     style: GoogleFonts.kameron(
-                        fontSize: 15, color: Color(0xffbc84e9)),
+                        fontSize: 15, color: LuColors.textlightPurpleColor),
                   )),
               SizedBox(
                 height: 20,
@@ -286,7 +289,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                   child: Text(
                                 'Select',
                                 style: GoogleFonts.kameron(
-                                    fontSize: 15, color: Color(0xff812ac7)),
+                                    fontSize: 15, color: LuColors.textPurpleColor),
                               )),
                             ),
                           ],
@@ -297,7 +300,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                   child: Text(
                     "$avgprd days",
                     style: GoogleFonts.kameron(
-                        fontSize: 15, color: Color(0xffbc84e9)),
+                        fontSize: 15, color: LuColors.textlightPurpleColor),
                   )),
               SizedBox(
                 height: 20,
@@ -338,13 +341,13 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xffbc84e9),
+                            color: LuColors.textlightPurpleColor,
                           ),
                         ),
                         if (isCTickVisible)
                           Icon(
                             Icons.check,
-                            color: Colors.white,
+                            color: LuColors.textWhiteColor,
                             size: 20,
                           ),
                       ],
@@ -391,7 +394,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xffbc84e9),
+                            color: LuColors.textlightPurpleColor,
                           ),
                         ),
                         if (isPTickVisible)
@@ -434,7 +437,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                   child: Text(
                     'Logout',
                     style: GoogleFonts.kameron(
-                        fontSize: 20, color: Color(0xff812ac7)),
+                        fontSize: 20, color: LuColors.textPurpleColor),
                   )),
               SizedBox(
                 height: 20,

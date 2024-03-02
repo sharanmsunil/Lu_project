@@ -46,6 +46,7 @@ dependencies:
   dotted_border: ^2.1.0
   vibration: ^1.8.4
   page_transition: ^2.1.0
+  get: ^4.6.6
 
 
 
@@ -74,7 +75,16 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/Lu/
-    - assets/google_fonts/
+
+  fonts:
+    - family: Kameron
+      fonts:
+        - asset: assets/google_fonts/Kameron-VariableFont_wght.ttf
+          weight: 500
+    - family: KolkerBrush
+      fonts:
+        - asset: assets/google_fonts/KolkerBrush-Regular.ttf
+          weight: 500
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

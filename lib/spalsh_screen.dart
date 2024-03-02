@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/utils/lu_colors.dart';
 import 'package:luna_loom/welcome_screen.dart';
+import 'package:luna_loom/widgets/logo_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Lu_Splash(),
     );
@@ -54,44 +56,9 @@ class _Lu_SplashState extends State<Lu_Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffbc84e9),
-      body: Center(
-        child: SizedBox(
-          height: 300,
-          width: 300,
-          child: Stack(alignment: Alignment.center, children: [
-            Positioned(
-              top: 50,
-              child: SizedBox(
-                height: 150,
-                width: 150,
-                child: Image.asset(
-                  'assets/Lu/logo.png',
-                ),
-              ),
-            ),
-            Positioned(
-              top: 30,
-              child: Text('Lu',
-                  style: GoogleFonts.kolkerBrush(
-                      fontSize: 130, color: Color(0xff812ac7))),
-            ),
-            Positioned(
-                top: 190,
-                child: Text(
-                  'LunaLoom',
-                  style: GoogleFonts.kameron(
-                      fontSize: 45, color: Colors.white),
-                )),
-            Positioned(
-                top: 240,
-                child: Text(
-                  'Illuminate Your Monthly Rhythm',
-                  style: GoogleFonts.kameron(
-                      fontSize: 10, color: Colors.white),
-                )),
-          ]),
-        ),
+      backgroundColor: LuColors.bgColor,
+      body: const Center(
+        child: LogoWidget(),
       ),
     );
   }

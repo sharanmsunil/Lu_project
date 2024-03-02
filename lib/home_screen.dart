@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luna_loom/settings.dart';
+import 'package:luna_loom/utils/lu_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
@@ -15,8 +16,8 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
-  late int avgcyc;
-  late int avgprd;
+   int avgcyc = 28;
+   int avgprd = 8;
    int? cycleday=0;
   String? lastmensis;
   static DateTime? cycleStartDate;
@@ -29,8 +30,8 @@ class _Home_ScreenState extends State<Home_Screen> {
   static DateTime? NxtcycleStartDate;
   static DateTime? NxtcycleendDate;
   late SharedPreferences preferences;
-  var bgcolor=Color(0xffbc84e9);
-  var rangeicon = Icon(Icons.signal_cellular_alt_1_bar_outlined,color: Colors.white,);
+  var bgcolor = LuColors.bgColor;
+  var rangeicon = Icon(Icons.signal_cellular_alt_1_bar_outlined,color: LuColors.textWhiteColor,);
   String rangetxt ='Low';
   String daystoperiod ='Period';
 
@@ -43,37 +44,37 @@ class _Home_ScreenState extends State<Home_Screen> {
 
   static Widget _periodIcon(String day) => Container(
       decoration: BoxDecoration(
-        color: Color(0xFFEA779C),
+        color: LuColors.periodColor,
         borderRadius: BorderRadius.all(Radius.circular(1000)),
       ),
       child: Center(
         child: Text(
           day,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: LuColors.textWhiteColor),
         ),
       ));
 
   static Widget _ovulationIcon(String day) => Container(
       decoration: BoxDecoration(
-        color: Color(0xffbc84e9),
+        color: LuColors.ovulationColor,
         borderRadius: BorderRadius.all(Radius.circular(1000)),
       ),
       child: Center(
         child: Text(
           day,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: LuColors.textWhiteColor),
         ),
       ));
 
   static Widget _mainovulationIcon(String day) => Container(
       decoration: BoxDecoration(
-          color: Color(0xffbc84e9),
+          color: LuColors.ovulationColor,
           borderRadius: BorderRadius.all(Radius.circular(1000)),
-          border: Border.all(color: Color(0xffea779c), width: 4.0)),
+          border: Border.all(color: LuColors.periodColor, width: 4.0)),
       child: Center(
         child: Text(
           day,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: LuColors.textWhiteColor),
         ),
       ));
 
@@ -250,7 +251,7 @@ class _Home_ScreenState extends State<Home_Screen> {
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
       firstDayOfWeek: DateTime.monday,
       viewportFraction: .7,
-      selectedDayButtonColor: Colors.grey.shade300,
+      selectedDayButtonColor: LuColors.textGreyColor,
       weekdayTextStyle: TextStyle(color: Colors.grey),
       weekendTextStyle: TextStyle(
         color: Colors.black,
@@ -266,38 +267,38 @@ class _Home_ScreenState extends State<Home_Screen> {
             if (date == PCycle[i]) {
               if(i<avgcyc){
               cycleday = i + 1;
-            }else if(avgcyc<=i && i<avgcyc+avgcyc){
+            }else if(avgcyc<=i && i<avgcyc*2){
                 int j=i-avgcyc;
                 cycleday=j+1;
-              }else if(avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc);
+              }else if(avgcyc*2<=i && i<avgcyc*3) {
+                int j = i - (avgcyc*2);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc);
+              }else if(avgcyc*3<=i && i<avgcyc*4) {
+                int j = i - (avgcyc*3);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*4<=i && i<avgcyc*5) {
+                int j = i - (avgcyc*4);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*5<=i && i<avgcyc*6) {
+                int j = i - (avgcyc*5);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*6<=i && i<avgcyc*7) {
+                int j = i - (avgcyc*6);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*7<=i && i<avgcyc*8) {
+                int j = i - (avgcyc*7);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*8<=i && i<avgcyc*9) {
+                int j = i - (avgcyc*8);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*9<=i && i<avgcyc*10) {
+                int j = i - (avgcyc*9);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*10<=i && i<avgcyc*11) {
+                int j = i - (avgcyc*10);
                 cycleday = j + 1;
-              }else if(avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc<=i && i<avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc) {
-                int j = i - (avgcyc + avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc+avgcyc);
+              }else if(avgcyc*11<=i && i<avgcyc*12) {
+                int j = i - (avgcyc*11);
                 cycleday = j + 1;
               }
             }
@@ -310,7 +311,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                     bgcolor = Colors.grey;
                     daystoperiod ='Prediction';
                     rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
-                               color: Colors.white,);
+                               color: LuColors.textWhiteColor,);
                            rangetxt='Low';
                   }
                 }
@@ -319,35 +320,35 @@ class _Home_ScreenState extends State<Home_Screen> {
           }
           for (int i = 0; i < PeriodDates.length; i++) {
             if (date == PeriodDates[i]) {
-              bgcolor = Color(0xFFEA779C);
+              bgcolor = LuColors.periodColor;
               daystoperiod ='Period';
               rangeicon = Icon(Icons.signal_cellular_alt_1_bar,
-                color: Colors.white,);
+                color: LuColors.textWhiteColor,);
               rangetxt='Low';
             }
           }
           for (int i = 0; i < OvulationDates.length; i++) {
             if (date == OvulationDates[i]) {
-              bgcolor = Color(0xffbc84e9);
+              bgcolor = LuColors.ovulationColor;
               daystoperiod ='Ovulation';
               rangeicon = Icon(Icons.signal_cellular_alt_2_bar,
-                        color: Colors.white,);
+                        color: LuColors.textWhiteColor,);
                        rangetxt='Medium';
             }
           }
           for (int i = 0; i < highOvulationDates.length; i++) {
             if (date == highOvulationDates[i]) {
-              bgcolor = Color(0xffbc84e9);
+              bgcolor = LuColors.ovulationColor;
               daystoperiod ='Ovulation';
-              rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
+              rangeicon = Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,);
               rangetxt='High';
             }
           }
           for (int i = 0; i < mainOvulationDates.length; i++) {
             if (date == mainOvulationDates[i]) {
-              bgcolor = Color(0xffbc84e9);
+              bgcolor = LuColors.ovulationColor;
               daystoperiod ='Ovulation';
-              rangeicon = Icon(Icons.signal_cellular_alt, color: Colors.white,);
+              rangeicon = Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,);
               rangetxt='High';
             }
           }
@@ -366,7 +367,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       customGridViewPhysics: ScrollPhysics(),
       showHeader: false,
       todayTextStyle: TextStyle(
-        color: Color(0xff812ac7),
+        color: LuColors.textPurpleColor,
       ),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 1,
@@ -374,7 +375,7 @@ class _Home_ScreenState extends State<Home_Screen> {
         return event.icon;
       },
       markedDateMoreShowTotal: null,
-      todayButtonColor: Colors.grey.shade300,
+      todayButtonColor: LuColors.textGreyColor,
       minSelectedDate: DateTime(2023, 10),
       maxSelectedDate: DateTime(2024, 12, 31),
       prevDaysTextStyle: TextStyle(
@@ -399,13 +400,13 @@ class _Home_ScreenState extends State<Home_Screen> {
         centerTitle: true,
         title: Text(
           (_currentDate == _today) ? 'Today, $_today1' : '$_currentDate',
-          style: TextStyle(color: Colors.white, fontSize: 25),
+          style: TextStyle(color: LuColors.textWhiteColor, fontSize: 25),
         ),
         actions: [
           IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.white,
+              color: LuColors.textWhiteColor,
             ),
             onPressed: () {
               Navigator.of(context)
@@ -510,7 +511,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                         child: Center(
                           child: Text(
                             daystoperiod,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: LuColors.textWhiteColor),
                           ),
                         ),
                       ),
@@ -531,18 +532,18 @@ class _Home_ScreenState extends State<Home_Screen> {
                                   SizedBox(width: 5,),
                                   Text(
                                     rangetxt,
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: LuColors.textWhiteColor),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 5,),
                               Text(
                                 'chances of',
-                                style: TextStyle(color: Colors.white, fontSize: 10),
+                                style: TextStyle(color: LuColors.textWhiteColor, fontSize: 10),
                               ),
                               Text(
                                 'getting pregnant',
-                                style: TextStyle(color: Colors.white, fontSize: 10),
+                                style: TextStyle(color: LuColors.textWhiteColor, fontSize: 10),
                               ),
                             ],
                           ),
@@ -561,12 +562,12 @@ class _Home_ScreenState extends State<Home_Screen> {
                            children: [
                              Text(
                                '$cycleday',
-                               style: TextStyle(color: Colors.white),
+                               style: TextStyle(color: LuColors.textWhiteColor),
                              ),
                              SizedBox(height: 5,),
                              Text(
                                'day of cycle',
-                               style: TextStyle(color: Colors.white),
+                               style: TextStyle(color: LuColors.textWhiteColor),
                              ),
                            ],
                          ),
@@ -582,7 +583,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   child: Text(
                     _currentMonth,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: LuColors.textWhiteColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 24.0,
                     ),
@@ -596,7 +597,7 @@ class _Home_ScreenState extends State<Home_Screen> {
               left: 150,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, elevation: 3),
+                      backgroundColor: LuColors.textWhiteColor, elevation: 3),
                   onPressed: () {
                     setState(() {
                       _targetDateTime = DateTime.now();
@@ -606,14 +607,14 @@ class _Home_ScreenState extends State<Home_Screen> {
                     children: [
                       Icon(
                         Icons.keyboard_return,
-                        color: Color(0xffbc84e9),
+                        color: LuColors.textlightPurpleColor,
                       ),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
                         'Today',
-                        style: TextStyle(color: Color(0xffbc84e9)),
+                        style: TextStyle(color: LuColors.textlightPurpleColor),
                       )
                     ],
                   )))

@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:luna_loom/utils/dimensions.dart';
+import 'package:luna_loom/utils/lu_colors.dart';
+import 'package:luna_loom/widgets/logo_widget.dart';
+import 'package:luna_loom/widgets/lu_font_txt.dart';
 
 import 'average_cycle.dart';
 class Lu_Welcome extends StatefulWidget {
@@ -13,123 +16,97 @@ class _Lu_SplashState extends State<Lu_Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffbc84e9),
+      backgroundColor: LuColors.bgColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: Stack(alignment: Alignment.center, children: [
-                Positioned(
-                  top: 50,
-                  child: SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: Image.asset(
-                      'assets/Lu/logo.png',
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 30,
-                  child: Text('Lu',
-                      style: GoogleFonts.kolkerBrush(
-                          fontSize: 130, color: Color(0xff812ac7))),
-                ),
-                Positioned(
-                    top: 190,
-                    child: Text(
-                      'LunaLoom',
-                      style: GoogleFonts.kameron(
-                          fontSize: 45, color: Colors.white),
-                    )),
-                Positioned(
-                    top: 240,
-                    child: Text(
-                      'Illuminate Your Monthly Rhythm',
-                      style: GoogleFonts.kameron(
-                          fontSize: 10, color: Colors.white),
-                    )),
-              ]),
+            const LogoWidget(),
+            Container(
+              margin: EdgeInsets.only(top: Dimensions.height60),
+              child: LuFontText(text: 'Welcome!',size: Dimensions.font30,),
             ),
             Container(
-              margin: EdgeInsets.only(top: 60),
-              child: Text('Welcome!',
-                  style:
-                  GoogleFonts.kameron(fontSize: 30, color: Colors.white)),
+              margin: EdgeInsets.only(top: Dimensions.height10),
+              child: Column(
+                children: [
+                  LuFontText(text: 'Please answer a few questions and we will',size: Dimensions.font12,),
+                  LuFontText(text: 'Personalize the app for you',size: Dimensions.font12,),
+                ],
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text('Please answer a few questions and we will',
-                  style:
-                  GoogleFonts.kameron(fontSize: 12, color: Colors.white)),
-            ),
-            Text('Personalize the app for you',
-                style: GoogleFonts.kameron(fontSize: 12, color: Colors.white)),
-            Container(
-              margin: EdgeInsets.only(top: 60),
+              margin: EdgeInsets.only(top: Dimensions.height60),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      elevation: 3, minimumSize: Size(220, 50)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimensions.radius25)
+                    ),
+                    backgroundColor: LuColors.textWhiteColor,
+                      elevation: 3, minimumSize: Size(Dimensions.width220, Dimensions.height50),),
                   onPressed: () {
                     Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return Avg_Cycle();
+                      return const Avg_Cycle();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
-                        transitionDuration: Duration(milliseconds: 200)));
+                        transitionDuration: const Duration(milliseconds: 200)));
                   },
-                  child: Text(
-                    'Continue',
-                    style: GoogleFonts.kameron(
-                        fontSize: 20, color: Color(0xff812ac7)),
-                  )),
+                  child: LuFontText(text: "Continue",color: LuColors.textPurpleColor,)),
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: Dimensions.height20),
               alignment: Alignment.center,
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(
+                  top: Dimensions.height10,
+              bottom: Dimensions.height10),
               child: Center(
-                  child: Text.rich(TextSpan(
-                      text: "By tapping \"Continue\" you agree to our ",
-                      style: GoogleFonts.kameron(
-                          fontSize: 10, color: Colors.grey[300]),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'terms of Service',
-                            style: GoogleFonts.kameron(
-                                fontSize: 10,
-                                color: Colors.grey[300],
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.grey[300]),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // code to open / launch terms of service link here
-                              }),
-                        TextSpan(text: '\n                               '),
-                        TextSpan(
-                            text: ' and ',
-                            style: GoogleFonts.kameron(
-                              fontSize: 10,
-                              color: Colors.grey[300],
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: 'privacy policy',
-                                  style: GoogleFonts.kameron(
-                                      fontSize: 10,
-                                      color: Colors.grey[300],
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: Colors.grey[300]),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // code to open / launch privacy policy link here
-                                    })
-                            ])
-                      ]))),
+                  child: Column(
+                    children: [
+                      Text.rich(TextSpan(
+                          text: "By tapping \"Continue\" you agree to our ",
+                          style: TextStyle(
+                              fontSize: Dimensions.font10,
+                              fontFamily: 'Kameron',
+                              color: LuColors.textGreyColor),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'terms of Service',
+                                style: TextStyle(
+                                    fontSize: Dimensions.font10,
+                                    fontFamily: 'Kameron',
+                                    color: LuColors.textGreyColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: LuColors.textGreyColor),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print("Terms Of Service");
+                                  }),
+                          ])),
+                      Text.rich(TextSpan(
+                          text: ' and ',
+                          style: TextStyle(
+                            fontSize: Dimensions.font10,
+                            fontFamily: 'Kameron',
+                            color: LuColors.textGreyColor,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'privacy policy',
+                                style: TextStyle(
+                                    fontSize: Dimensions.font10,
+                                    fontFamily: 'Kameron',
+                                    color: LuColors.textGreyColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: LuColors.textGreyColor),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print("Privacy Policy");
+                                  })
+                          ]))
+                    ],
+                  )),
             )
           ],
         ),
