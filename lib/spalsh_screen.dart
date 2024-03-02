@@ -49,7 +49,7 @@ class _LuSplashState extends State<LuSplash> {
     }else if (isANewUser == true){
       Future.delayed(const Duration(seconds: 3),(){
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Home_Screen()));
+            MaterialPageRoute(builder: (context) => HomeScreen()));
       });
     }
   }

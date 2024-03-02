@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/utils/dimensions.dart';
 import 'package:luna_loom/utils/lu_colors.dart';
 import 'package:luna_loom/welcome_screen.dart';
+import 'package:luna_loom/widgets/lu_font_txt.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
-import 'package:flutter/services.dart';
-class Lu_Settings extends StatefulWidget {
-  Lu_Settings({super.key});
+class LuSettings extends StatefulWidget {
+  const LuSettings({super.key});
 
   @override
-  State<Lu_Settings> createState() => _Lu_SettingsState();
+  State<LuSettings> createState() => _LuSettingsState();
 }
 
-class _Lu_SettingsState extends State<Lu_Settings> {
+class _LuSettingsState extends State<LuSettings> {
   late SharedPreferences preferences;
-  int avgcyc = 28;
-  int avgprd =8;
+  int avgCyc = 28;
+  int avgPrd =8;
   bool isANewUser = false;
 
   @override
@@ -29,13 +29,10 @@ class _Lu_SettingsState extends State<Lu_Settings> {
   void fetchData() async {
     preferences = await SharedPreferences.getInstance();
     setState(() {
-      avgcyc = preferences.getInt("AvgCycle")!;
-      avgprd = preferences.getInt("AvgPeriod")!;
+      avgCyc = preferences.getInt("AvgCycle")!;
+      avgPrd = preferences.getInt("AvgPeriod")!;
     });
   }
-
-  //var cday =28;
-  //var pday =5;
 
   bool isCTickVisible = false;
   bool isPTickVisible = false;
@@ -49,85 +46,70 @@ class _Lu_SettingsState extends State<Lu_Settings> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: 30,
+                height: Dimensions.height30,
               ),
               Row(
                 children: [
                   IconButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                          return Home_Screen();
+                          return const HomeScreen();
                         },
                             transitionsBuilder: (context,an1,an2,child){
                               return FadeTransition(opacity: an1,child: child,);
                             },
-                            transitionDuration: Duration(milliseconds: 800)));
+                            transitionDuration: const Duration(milliseconds: 800)));
                       },
-                      icon: Icon(Icons.arrow_back)),
+                      icon: const Icon(Icons.arrow_back)),
                   SizedBox(
-                    width: 110,
+                    width: Dimensions.width110,
                   ),
-                  Text(
-                    'Settings',
-                    style:
-                        GoogleFonts.kameron(color: Colors.black, fontSize: 20),
-                  ),
+                  const LuFontText(text: 'Settings',color: Colors.black,),
                 ],
               ),
               SizedBox(
-                height: 50,
+                height: Dimensions.height50,
               ),
-              Text(
-                'Duration of cycle',
-                style:
-                    GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
-              ),
+              LuFontText(text: 'Duration of cycle',size: Dimensions.font15,color: Colors.grey[600],),
               SizedBox(
-                height: 10,
+                height: Dimensions.height10,
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: LuColors.textWhiteColor,
-                      elevation: 1, minimumSize: Size(300, 40)),
+                      elevation: 1, minimumSize: Size(Dimensions.width300, Dimensions.height40),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimensions.radius25)
+                    ),),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           content: Container(
-                              margin: EdgeInsets.only(top: 20),
-                              child: Container(
-                                height: 200,
+                              margin: EdgeInsets.only(top: Dimensions.height20),
+                              child: SizedBox(
+                                height: Dimensions.height200,
                                 child: StatefulBuilder(
                                     builder: (context, setState) {
                                   return Column(
                                     children: <Widget>[
-                                      Text(
-                                        'Duration of cycle',
-                                        style: GoogleFonts.kameron(
-                                            color: Colors.grey[600],
-                                            fontSize: 15),
-                                      ),
-                                      Text(
-                                        'Choose the number of days',
-                                        style: GoogleFonts.kameron(
-                                            color: Colors.grey[600],
-                                            fontSize: 15),
-                                      ),
+                                      LuFontText(text: 'Duration of cycle',color: Colors.grey[600],size: Dimensions.font15,),
+                                      LuFontText(text: 'Choose the number of days',color: Colors.grey[600],size: Dimensions.font15,),
                                       Stack(
                                         alignment: Alignment.center,
                                         children: [
                                           Container(
                                             margin: EdgeInsets.symmetric(
-                                                horizontal: 5, vertical: 15),
+                                                horizontal: Dimensions.width5, vertical: Dimensions.height15),
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
+                                                horizontal: Dimensions.width15),
                                             alignment: Alignment.center,
-                                            height: 30,
+                                            height: Dimensions.height30,
                                             decoration: BoxDecoration(
                                               color: Colors.grey[100],
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(Dimensions.radius20),
                                               border: Border.all(
                                                   color: Colors.grey.shade200),
                                             ),
@@ -136,23 +118,23 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                             //haptics: true,
                                               minValue: 20,
                                               maxValue: 50,
-                                              value: avgcyc,
+                                              value: avgCyc,
                                               itemHeight: 30,
                                               itemWidth: 30,
                                               itemCount: 5,
                                               axis: Axis.vertical,
                                               selectedTextStyle: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 25,
+                                                fontSize: Dimensions.font25,
                                               ),
                                               textStyle: TextStyle(
                                                   color: Colors.grey[400],
-                                                  fontSize: 15),
+                                                  fontSize: Dimensions.font15),
                                               onChanged: (value) {
                                                 //HapticFeedback.heavyImpact();
                                                 Vibration.vibrate(duration: 10,);
                                                 setState(() {
-                                                  avgcyc = value;
+                                                  avgCyc = value;
                                                 });
                                               }),
                                         ],
@@ -167,80 +149,61 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                 preferences =
                                     await SharedPreferences.getInstance();
                                 setState(() {
-                                  preferences.setInt("AvgCycle", avgcyc);
+                                  preferences.setInt("AvgCycle", avgCyc);
                                 });
-                                Navigator.of(context).pop();
+                                if (context.mounted) Navigator.of(context).pop();
                               },
                               child: Center(
-                                  child: Text(
-                                'Select',
-                                style: GoogleFonts.kameron(
-                                    fontSize: 15, color: LuColors.textPurpleColor),
-                              )),
+                                  child: LuFontText(text: 'Select',size: Dimensions.font15,color: LuColors.textPurpleColor,)),
                             ),
                           ],
                         );
                       },
                     );
                   },
-                  child: Text(
-                    "$avgcyc days",
-                    style: GoogleFonts.kameron(
-                        fontSize: 15, color: LuColors.textLightPurpleColor),
-                  )),
+                  child: LuFontText(text: "$avgCyc days",size: Dimensions.font15,color: LuColors.textLightPurpleColor,)),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
-              Text(
-                'Duration of period',
-                style:
-                    GoogleFonts.kameron(color: Colors.grey[600], fontSize: 15),
-              ),
+              LuFontText(text: 'Duration of period',size: Dimensions.font15,color: Colors.grey[600],),
               SizedBox(
-                height: 10,
+                height: Dimensions.height10,
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      elevation: 1, minimumSize: Size(300, 40)),
+                      elevation: 1, minimumSize: Size(Dimensions.width300, Dimensions.height40),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimensions.radius25)
+                    ),),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           content: Container(
-                              margin: EdgeInsets.only(top: 20),
-                              child: Container(
-                                height: 200,
+                              margin: EdgeInsets.only(top: Dimensions.height20),
+                              child: SizedBox(
+                                height: Dimensions.height200,
                                 child: StatefulBuilder(
                                     builder: (context, setState) {
                                   return Column(
                                     children: <Widget>[
-                                      Text(
-                                        'Duration of period',
-                                        style: GoogleFonts.kameron(
-                                            color: Colors.grey[600],
-                                            fontSize: 15),
-                                      ),
-                                      Text(
-                                        'Choose the number of days',
-                                        style: GoogleFonts.kameron(
-                                            color: Colors.grey[600],
-                                            fontSize: 15),
-                                      ),
+                                      LuFontText(text: 'Duration of period',size: Dimensions.font15,color: Colors.grey[600],),
+                                      LuFontText(text: 'Choose the number of days',size: Dimensions.font15,color: Colors.grey[600],),
                                       Stack(
                                         alignment: Alignment.center,
                                         children: [
                                           Container(
                                             margin: EdgeInsets.symmetric(
-                                                horizontal: 5, vertical: 15),
+                                                horizontal: Dimensions.width5, vertical: Dimensions.height15),
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
+                                                horizontal: Dimensions.width15),
                                             alignment: Alignment.center,
-                                            height: 30,
+                                            height: Dimensions.height30,
                                             decoration: BoxDecoration(
                                               color: Colors.grey[100],
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(Dimensions.radius20),
                                               border: Border.all(
                                                   color: Colors.grey.shade200),
                                             ),
@@ -249,22 +212,21 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                               haptics: true,
                                               minValue: 1,
                                               maxValue: 20,
-                                              value: avgprd,
-                                              //widget.avgprd,
+                                              value: avgPrd,
                                               itemHeight: 30,
                                               itemWidth: 30,
                                               itemCount: 5,
                                               axis: Axis.vertical,
                                               selectedTextStyle: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 25,
+                                                fontSize: Dimensions.font25,
                                               ),
                                               textStyle: TextStyle(
                                                   color: Colors.grey[400],
-                                                  fontSize: 15),
+                                                  fontSize: Dimensions.font15),
                                               onChanged: (value)  {setState(
                                                     ()  {
-                                                      avgprd = value;
+                                                      avgPrd = value;
                                                       Vibration.vibrate(duration: 10,);
                                                     }
 
@@ -281,50 +243,39 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                                 preferences =
                                     await SharedPreferences.getInstance();
                                 setState(() {
-                                  preferences.setInt("AvgPeriod", avgprd);
+                                  preferences.setInt("AvgPeriod", avgPrd);
                                 });
-                                Navigator.of(context).pop();
+                                if (context.mounted) Navigator.of(context).pop();
                               },
                               child: Center(
-                                  child: Text(
-                                'Select',
-                                style: GoogleFonts.kameron(
-                                    fontSize: 15, color: LuColors.textPurpleColor),
-                              )),
+                                  child: LuFontText(text: 'Select',size: Dimensions.font15,color: LuColors.textPurpleColor,)),
                             ),
                           ],
                         );
                       },
                     );
                   },
-                  child: Text(
-                    "$avgprd days",
-                    style: GoogleFonts.kameron(
-                        fontSize: 15, color: LuColors.textLightPurpleColor),
-                  )),
+                  child: LuFontText(text: "$avgPrd days",size: Dimensions.font15,color: LuColors.textLightPurpleColor,)),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
               Row(
                 children: [
                   SizedBox(
-                    width: 30,
+                    width: Dimensions.width30,
                   ),
                   Icon(
                     Icons.calendar_month_outlined,
                     color: Colors.grey[400],
-                    size: 40,
+                    size: Dimensions.iconSize40,
                   ),
                   SizedBox(
-                    width: 20,
+                    width: Dimensions.width20,
                   ),
-                  Text(
-                    'Notify about the start of \nthe period',
-                    style: GoogleFonts.kameron(
-                        color: Colors.grey[600], fontSize: 15),
-                  ),
+                  LuFontText(text: 'Notify about the start of \nthe period',
+                  size: Dimensions.font15,color: Colors.grey[600],),
                   SizedBox(
-                    width: 40,
+                    width: Dimensions.width40,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -337,9 +288,9 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
+                          width: Dimensions.width40,
+                          height: Dimensions.height40,
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: LuColors.textLightPurpleColor,
                           ),
@@ -348,7 +299,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           Icon(
                             Icons.check,
                             color: LuColors.textWhiteColor,
-                            size: 20,
+                            size: Dimensions.iconSize20,
                           ),
                       ],
                     ),
@@ -356,28 +307,24 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
               Row(
                 children: [
                   SizedBox(
-                    width: 30,
+                    width: Dimensions.width30,
                   ),
                   Icon(
                     Icons.circle_outlined,
                     color: Colors.grey[400],
-                    size: 40,
+                    size: Dimensions.iconSize40,
                   ),
                   SizedBox(
-                    width: 20,
+                    width: Dimensions.width20,
                   ),
-                  Text(
-                    'Notify about the start of \nthe ovulation',
-                    style: GoogleFonts.kameron(
-                        color: Colors.grey[600], fontSize: 15),
-                  ),
+                  LuFontText(text: 'Notify about the start of \nthe ovulation',color: Colors.grey[600],size: Dimensions.font15,),
                   SizedBox(
-                    width: 40,
+                    width: Dimensions.width40,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -390,9 +337,9 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
+                          width: Dimensions.width40,
+                          height: Dimensions.height40,
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: LuColors.textLightPurpleColor,
                           ),
@@ -401,7 +348,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           Icon(
                             Icons.check,
                             color: Colors.white,
-                            size: 20,
+                            size: Dimensions.iconSize20,
                           ),
                       ],
                     ),
@@ -409,38 +356,36 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
-              Text(
-                'Theme',
-                style: GoogleFonts.kameron(color: Colors.black, fontSize: 20),
-              ),
+              const LuFontText(text: 'Theme',color: Colors.black,),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      elevation: 1, minimumSize: Size(150, 40)),
+                      elevation: 1, minimumSize: Size(Dimensions.width150, Dimensions.height40),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimensions.radius25)
+                    ),),
                   onPressed: () async {
                     preferences = await SharedPreferences.getInstance();
                     preferences.setBool('newUser', false);
 
                     ///change to false
-                    Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return LuWelcome();
+                    if (context.mounted) {
+                      Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return const LuWelcome();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
-                        transitionDuration: Duration(milliseconds: 100)));
+                        transitionDuration: const Duration(milliseconds: 100)));
+                    }
                   },
-                  child: Text(
-                    'Logout',
-                    style: GoogleFonts.kameron(
-                        fontSize: 20, color: LuColors.textPurpleColor),
-                  )),
+                  child: const LuFontText(text: 'Logout',color: LuColors.textPurpleColor,)),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
             ],
           ),
