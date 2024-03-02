@@ -9,15 +9,15 @@ import 'package:vibration/vibration.dart';
 
 import 'average_period.dart';
 
-class Avg_Cycle extends StatefulWidget {
-  const Avg_Cycle({super.key});
+class AvgCycle extends StatefulWidget {
+  const AvgCycle({super.key});
 
   @override
-  State<Avg_Cycle> createState() => _Avg_CycleState();
+  State<AvgCycle> createState() => _AvgCycleState();
 }
 
-class _Avg_CycleState extends State<Avg_Cycle> {
-  var avgcyc=28;
+class _AvgCycleState extends State<AvgCycle> {
+  var avgCyc=28;
   late SharedPreferences preferences;
 
   @override
@@ -32,8 +32,8 @@ class _Avg_CycleState extends State<Avg_Cycle> {
             SizedBox(
               height: Dimensions.height30,
             ),
-            LuFontText(text: 'How many days does your cycle'),
-            LuFontText(text: 'last on average?'),
+            const LuFontText(text: 'How many days does your cycle'),
+            const LuFontText(text: 'last on average?'),
             SizedBox(
               height: Dimensions.height20,
             ),
@@ -49,7 +49,7 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
                             blurRadius: 5,
@@ -63,7 +63,7 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                   decoration: BoxDecoration(
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius50),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
                             blurRadius: 10,
@@ -74,20 +74,20 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                     haptics: true,
                     minValue: 20,
                     maxValue: 50,
-                    value: avgcyc,
+                    value: avgCyc,
                     itemHeight: 45,
                     itemWidth: 45,
                     itemCount: 7,
                     axis: Axis.horizontal,
-                    selectedTextStyle: TextStyle(
+                    selectedTextStyle: const TextStyle(
                       color: LuColors.textPurpleColor,
                       fontSize: 25,
                     ),
                     textStyle:
-                        TextStyle(color: LuColors.textlightPurpleColor, fontSize: Dimensions.font15),
+                        TextStyle(color: LuColors.textLightPurpleColor, fontSize: Dimensions.font15),
                     onChanged: (value)  {setState(
                           () {
-                            avgcyc = value;
+                            avgCyc = value;
                             Vibration.vibrate(duration: 10,);
                           }
                         );}),
@@ -106,17 +106,19 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                   ),
                   onPressed: () async{
                       preferences = await SharedPreferences.getInstance();
-                      int averagecycle = avgcyc;
-                      preferences.setInt("AvgCycle", averagecycle);
-                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                        return Avg_Period();
+                      int averageCycle = avgCyc;
+                      preferences.setInt("AvgCycle", averageCycle);
+                      if (context.mounted) {
+                        Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                        return const AvgPeriod();
                       },
                           transitionsBuilder: (context,an1,an2,child){
                             return FadeTransition(opacity: an1,child: child,);
                           },
                           transitionDuration: const Duration(milliseconds: 200)));
+                      }
                   },
-                  child: LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
+                  child: const LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
             SizedBox(height: Dimensions.height10,),
              ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -128,17 +130,19 @@ class _Avg_CycleState extends State<Avg_Cycle> {
                   ),
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
-                    int averagecycle = avgcyc;
-                    preferences.setInt("AvgCycle", averagecycle);
-                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return Avg_Period();
+                    int averageCycle = avgCyc;
+                    preferences.setInt("AvgCycle", averageCycle);
+                    if (context.mounted) {
+                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return const AvgPeriod();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
                         transitionDuration: const Duration(milliseconds: 200)));
+                    }
                   },
-                  child: LuFontText(text: "I don't remember",size: Dimensions.font15,color: LuColors.textlightPurpleColor,)),
+                  child: LuFontText(text: "I don't remember",size: Dimensions.font15,color: LuColors.textLightPurpleColor,)),
           ],
         ),
       ),

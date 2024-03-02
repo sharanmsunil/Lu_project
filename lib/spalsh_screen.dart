@@ -19,19 +19,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Lu_Splash(),
+      home: LuSplash(),
     );
   }
 }
 
-class Lu_Splash extends StatefulWidget {
-  const Lu_Splash({super.key});
+class LuSplash extends StatefulWidget {
+  const LuSplash({super.key});
 
   @override
-  State<Lu_Splash> createState() => _Lu_SplashState();
+  State<LuSplash> createState() => _LuSplashState();
 }
 
-class _Lu_SplashState extends State<Lu_Splash> {
+class _LuSplashState extends State<LuSplash> {
   late SharedPreferences preferences;
   late bool isANewUser=false;
   @override
@@ -44,7 +44,7 @@ class _Lu_SplashState extends State<Lu_Splash> {
     isANewUser = preferences.getBool('newUser')! ;
     if (isANewUser == false) {
      Future.delayed(const Duration(seconds: 3),(){
-       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Lu_Welcome()));
+       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const LuWelcome()));
      });
     }else if (isANewUser == true){
       Future.delayed(const Duration(seconds: 3),(){
@@ -55,9 +55,9 @@ class _Lu_SplashState extends State<Lu_Splash> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: LuColors.bgColor,
-      body: const Center(
+      body: Center(
         child: LogoWidget(),
       ),
     );

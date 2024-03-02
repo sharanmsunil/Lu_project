@@ -28,8 +28,9 @@ class Dimensions{
 
   //padding or margin width
   static double width15 = screenHeight/52.07;
-  static double width220 = screenHeight/3.55;
+  static double width25 = screenHeight/31.24;
   static double width50 = screenHeight/15.62;
+  static double width220 = screenHeight/3.55;
   // static double width5 = screenHeight/156.21;
   // static double width10 = screenHeight/78.1;
   // static double width20 = screenHeight/39.05;

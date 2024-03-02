@@ -13,7 +13,7 @@ import 'package:luna_loom/spalsh_screen.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(Lu_Splash());
+    await tester.pumpWidget(const LuSplash());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -186,7 +186,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                   child: Text(
                     "$avgcyc days",
                     style: GoogleFonts.kameron(
-                        fontSize: 15, color: LuColors.textlightPurpleColor),
+                        fontSize: 15, color: LuColors.textLightPurpleColor),
                   )),
               SizedBox(
                 height: 20,
@@ -300,7 +300,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                   child: Text(
                     "$avgprd days",
                     style: GoogleFonts.kameron(
-                        fontSize: 15, color: LuColors.textlightPurpleColor),
+                        fontSize: 15, color: LuColors.textLightPurpleColor),
                   )),
               SizedBox(
                 height: 20,
@@ -341,7 +341,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: LuColors.textlightPurpleColor,
+                            color: LuColors.textLightPurpleColor,
                           ),
                         ),
                         if (isCTickVisible)
@@ -394,7 +394,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: LuColors.textlightPurpleColor,
+                            color: LuColors.textLightPurpleColor,
                           ),
                         ),
                         if (isPTickVisible)
@@ -427,7 +427,7 @@ class _Lu_SettingsState extends State<Lu_Settings> {
 
                     ///change to false
                     Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return Lu_Welcome();
+                      return LuWelcome();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);

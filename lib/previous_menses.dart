@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:luna_loom/home_screen.dart';
+import 'package:luna_loom/utils/dimensions.dart';
 import 'package:luna_loom/utils/lu_colors.dart';
 import 'package:luna_loom/widgets/logo_widget.dart';
+import 'package:luna_loom/widgets/lu_font_txt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
-class Prvs_Mns extends StatefulWidget {
+class PreviousMns extends StatefulWidget {
+  const PreviousMns({super.key});
 
-   Prvs_Mns({super.key});
 
   @override
-  State<Prvs_Mns> createState() => _Prvs_MnsState();
+  State<PreviousMns> createState() => _PreviousMnsState();
 }
 
-class _Prvs_MnsState extends State<Prvs_Mns> {
+class _PreviousMnsState extends State<PreviousMns> {
   late DateTime selectedDate;
   late SharedPreferences preferences;
-  var prvmensis;
-  var formate1;
+  dynamic previousMenses;
+  dynamic forMate;
   late bool isANewUser;
 
   @override
@@ -30,18 +31,19 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LogoWidget(),
+            const LogoWidget(),
             Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Text('When did your previous',
-                  style:
-                      GoogleFonts.kameron(fontSize: 20, color: LuColors.textWhiteColor)),
+              margin: EdgeInsets.only(top: Dimensions.height30),
+              child: const Column(
+                children: [
+                  LuFontText(text: 'When did your previous'),
+                  LuFontText(text: 'menses begin?')
+                ],
+              ),
             ),
-            Text('menses begin?',
-                style: GoogleFonts.kameron(fontSize: 20, color: LuColors.textWhiteColor)),
-            SizedBox(height: 20,),
+            SizedBox(height: Dimensions.height20,),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.width25),
               child: DatePickerWidget(
                 looping: false,
                 firstDate: DateTime(2023, 10),
@@ -52,40 +54,39 @@ class _Prvs_MnsState extends State<Prvs_Mns> {
                 onChange: (DateTime newDate,_) {
                   setState(() {
                     selectedDate = newDate;
-                    prvmensis = newDate;
-                    formate1 = "${prvmensis.day}-${prvmensis.month}-${prvmensis.year}";
+                    previousMenses = newDate;
+                    forMate = "${previousMenses.day}-${previousMenses.month}-${previousMenses.year}";
                     Vibration.vibrate(duration: 10,);
                   });
                 } ,
                 pickerTheme: DateTimePickerTheme(
                   backgroundColor: LuColors.bgColor,
-                    itemTextStyle: TextStyle(color: LuColors.textWhiteColor,fontSize: 19),
+                    itemTextStyle: TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font20),
                     dividerColor: LuColors.logoColor,
                 ),
               ),
             ),
-        SizedBox(height: 30,),
+        SizedBox(height: Dimensions.height30,),
             ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: LuColors.textWhiteColor,
-                      elevation: 3, minimumSize: Size(220, 50)),
+                      elevation: 3, minimumSize: Size(Dimensions.width220, Dimensions.height50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimensions.radius25)
+                    ),),
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
                     preferences.setBool('newUser', true);
-                    if(prvmensis==null){
-                      String backupdate ='2024-01-01 00:00:00.000';
-                      prvmensis=DateTime.parse(backupdate);
-                      preferences.setString("LastMensis", prvmensis.toString());
+                    if(previousMenses==null){
+                      String backupDate ='2024-01-01 00:00:00.000';
+                      previousMenses=DateTime.parse(backupDate);
+                      preferences.setString("LastMenses", previousMenses.toString());
                     }else {
-                      preferences.setString("LastMensis", prvmensis.toString());
+                      preferences.setString("LastMenses", previousMenses.toString());
                     }
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Home_Screen()),(route)=>false);
+                    if (context.mounted)Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Home_Screen()),(route)=>false);
                   },
-                  child: Text(
-                    'Continue',
-                    style: GoogleFonts.kameron(
-                        fontSize: 20, color: LuColors.textPurpleColor),
-                  )),
+                  child: const LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
           ],
         ),
       ),

@@ -607,14 +607,14 @@ class _Home_ScreenState extends State<Home_Screen> {
                     children: [
                       Icon(
                         Icons.keyboard_return,
-                        color: LuColors.textlightPurpleColor,
+                        color: LuColors.textLightPurpleColor,
                       ),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
                         'Today',
-                        style: TextStyle(color: LuColors.textlightPurpleColor),
+                        style: TextStyle(color: LuColors.textLightPurpleColor),
                       )
                     ],
                   )))

@@ -6,12 +6,14 @@ import 'package:luna_loom/widgets/logo_widget.dart';
 import 'package:luna_loom/widgets/lu_font_txt.dart';
 
 import 'average_cycle.dart';
-class Lu_Welcome extends StatefulWidget {
+class LuWelcome extends StatefulWidget {
+  const LuWelcome({super.key});
+
   @override
-  State<Lu_Welcome> createState() => _Lu_SplashState();
+  State<LuWelcome> createState() => _LuWelcomeState();
 }
 
-class _Lu_SplashState extends State<Lu_Welcome> {
+class _LuWelcomeState extends State<LuWelcome> {
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +48,14 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                       elevation: 3, minimumSize: Size(Dimensions.width220, Dimensions.height50),),
                   onPressed: () {
                     Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return const Avg_Cycle();
+                      return const AvgCycle();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
                         transitionDuration: const Duration(milliseconds: 200)));
                   },
-                  child: LuFontText(text: "Continue",color: LuColors.textPurpleColor,)),
+                  child: const LuFontText(text: "Continue",color: LuColors.textPurpleColor,)),
             ),
             Container(
               margin: EdgeInsets.only(top: Dimensions.height20),
@@ -81,7 +83,7 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                                     decorationColor: LuColors.textGreyColor),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    print("Terms Of Service");
+                                    // print("Terms Of Service");
                                   }),
                           ])),
                       Text.rich(TextSpan(
@@ -102,7 +104,7 @@ class _Lu_SplashState extends State<Lu_Welcome> {
                                     decorationColor: LuColors.textGreyColor),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    print("Privacy Policy");
+                                    // print("Privacy Policy");
                                   })
                           ]))
                     ],

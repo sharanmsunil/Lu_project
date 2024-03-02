@@ -8,16 +8,16 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
-class Avg_Period extends StatefulWidget {
+class AvgPeriod extends StatefulWidget {
 
-  const Avg_Period({super.key});
+  const AvgPeriod({super.key});
 
   @override
-  State<Avg_Period> createState() => _Avg_PeriodState();
+  State<AvgPeriod> createState() => _AvgPeriodState();
 }
 
-class _Avg_PeriodState extends State<Avg_Period> {
-  var avgprd = 5;
+class _AvgPeriodState extends State<AvgPeriod> {
+  var avgPrd = 5;
   late SharedPreferences preferences;
 
 
@@ -50,7 +50,7 @@ class _Avg_PeriodState extends State<Avg_Period> {
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
                             blurRadius: 5,
@@ -64,7 +64,7 @@ class _Avg_PeriodState extends State<Avg_Period> {
                   decoration: BoxDecoration(
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius50),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
                             blurRadius: 10,
@@ -75,20 +75,20 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     haptics: true,
                     minValue: 1,
                     maxValue: 20,
-                    value: avgprd,
+                    value: avgPrd,
                     itemHeight: 45,
                     itemWidth: 45,
                     itemCount: 7,
                     axis: Axis.horizontal,
-                    selectedTextStyle: TextStyle(
+                    selectedTextStyle: const TextStyle(
                       color: LuColors.textPurpleColor,
                       fontSize: 25,
                     ),
                     textStyle:
-                        TextStyle(color: LuColors.textlightPurpleColor, fontSize: 15),
+                        const TextStyle(color: LuColors.textLightPurpleColor, fontSize: 15),
                     onChanged: (value) {setState(
                           () {
-                            avgprd = value;
+                            avgPrd = value;
                             Vibration.vibrate(duration: 10,);
                           }
                         );}),
@@ -107,17 +107,19 @@ class _Avg_PeriodState extends State<Avg_Period> {
                   ),
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
-                    int averageperiod = avgprd;
-                    preferences.setInt("AvgPeriod", averageperiod);
-                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return Prvs_Mns();
+                    int averagePeriod = avgPrd;
+                    preferences.setInt("AvgPeriod", averagePeriod);
+                    if (context.mounted) {
+                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return const PreviousMns();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
                         transitionDuration: const Duration(milliseconds: 200)));
+                    }
                   },
-                  child: LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
+                  child: const LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
             SizedBox(height: Dimensions.height10,),
             ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -128,17 +130,19 @@ class _Avg_PeriodState extends State<Avg_Period> {
                     ),),
                   onPressed: () async{
                     preferences = await SharedPreferences.getInstance();
-                    int averageperiod = avgprd;
-                    preferences.setInt("AvgPeriod", averageperiod);
-                    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                      return Prvs_Mns();
+                    int averagePeriod = avgPrd;
+                    preferences.setInt("AvgPeriod", averagePeriod);
+                    if (context.mounted) {
+                      Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                      return const PreviousMns();
                     },
                         transitionsBuilder: (context,an1,an2,child){
                           return FadeTransition(opacity: an1,child: child,);
                         },
                         transitionDuration: const Duration(milliseconds: 200)));
+                    }
                   },
-                  child: LuFontText(text: "I don't remember",size: Dimensions.font15,color: LuColors.textlightPurpleColor,)),
+                  child: LuFontText(text: "I don't remember",size: Dimensions.font15,color: LuColors.textLightPurpleColor,)),
           ],
         ),
       ),
