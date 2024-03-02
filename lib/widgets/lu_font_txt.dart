@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:luna_loom/utils/dimensions.dart';
 class LuFontText extends StatelessWidget {
-  Color? color;
+  final Color? color;
   final String text;
-  double size;
-  LuFontText({
+  final double size;
+  const LuFontText({super.key,
     this.color =  Colors.white,
     required this.text,
     this.size = 0,

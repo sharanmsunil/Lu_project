@@ -10,7 +10,7 @@ import 'package:vibration/vibration.dart';
 
 class Avg_Period extends StatefulWidget {
 
-  Avg_Period({super.key});
+  const Avg_Period({super.key});
 
   @override
   State<Avg_Period> createState() => _Avg_PeriodState();
@@ -33,8 +33,8 @@ class _Avg_PeriodState extends State<Avg_Period> {
             SizedBox(
               height: Dimensions.height30,
             ),
-            LuFontText(text: 'How long does your period last'),
-           LuFontText(text: 'on average?'),
+            const LuFontText(text: 'How long does your period last'),
+           const LuFontText(text: 'on average?'),
             SizedBox(
               height: Dimensions.height20,
             ),

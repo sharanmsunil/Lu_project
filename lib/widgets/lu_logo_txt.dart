@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:luna_loom/utils/dimensions.dart';
 class LuLogoText extends StatelessWidget {
-  Color? color;
+  final Color? color;
   final String text;
-  double size;
-  LuLogoText({
+  final double size;
+  const LuLogoText({super.key,
     required this.color,
     required this.text,
     this.size = 0,
