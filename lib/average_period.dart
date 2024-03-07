@@ -17,7 +17,7 @@ class AvgPeriod extends StatefulWidget {
 }
 
 class _AvgPeriodState extends State<AvgPeriod> {
-  var avgPrd = 5;
+  var avgPrd = 8;
   late SharedPreferences preferences;
 
 

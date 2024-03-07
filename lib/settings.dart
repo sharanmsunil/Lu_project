@@ -119,8 +119,8 @@ class _LuSettingsState extends State<LuSettings> {
                                               minValue: 20,
                                               maxValue: 50,
                                               value: avgCyc,
-                                              itemHeight: 30,
-                                              itemWidth: 30,
+                                              itemHeight: Dimensions.height30,
+                                              itemWidth: Dimensions.width30,
                                               itemCount: 5,
                                               axis: Axis.vertical,
                                               selectedTextStyle: TextStyle(
@@ -213,8 +213,8 @@ class _LuSettingsState extends State<LuSettings> {
                                               minValue: 1,
                                               maxValue: 20,
                                               value: avgPrd,
-                                              itemHeight: 30,
-                                              itemWidth: 30,
+                                              itemHeight: Dimensions.height30,
+                                              itemWidth: Dimensions.width30,
                                               itemCount: 5,
                                               axis: Axis.vertical,
                                               selectedTextStyle: TextStyle(
