@@ -84,7 +84,7 @@ class _PreviousMnsState extends State<PreviousMns> {
                     }else {
                       preferences.setString("LastMenses", previousMenses.toString());
                     }
-                    if (context.mounted)Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeScreen()),(route)=>false);
+                    if (context.mounted)Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeScreen()),(route)=>false);
                   },
                   child: const LuFontText(text: 'Continue',color: LuColors.textPurpleColor,)),
           ],

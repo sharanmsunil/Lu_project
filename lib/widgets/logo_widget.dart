@@ -26,7 +26,7 @@ class LogoWidget extends StatelessWidget {
         ),
         Positioned(
           top: Dimensions.height30,
-          child: LuLogoText(color: LuColors.logoColor, text: 'Lu'),
+          child: const LuLogoText(color: LuColors.logoColor, text: 'Lu'),
         ),
         Positioned(bottom: Dimensions.height45, child: LuFontText(text: 'LunaLoom',size: Dimensions.font45,)),
         Positioned(

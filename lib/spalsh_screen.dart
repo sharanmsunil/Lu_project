@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:luna_loom/home_screen.dart';
 import 'package:luna_loom/utils/lu_colors.dart';
@@ -41,18 +42,24 @@ class _LuSplashState extends State<LuSplash> {
   }
   void checkTheUserIsAlreadyLoggedIn() async {
     var preferences = await SharedPreferences.getInstance();
-    isANewUser = preferences.getBool('newUser')! ;
+    isANewUser = preferences.getBool('newUser') ?? false ;
     if (isANewUser == false) {
-     Future.delayed(const Duration(seconds: 3),(){
-       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const LuWelcome()));
-     });
-    }else if (isANewUser == true){
-      Future.delayed(const Duration(seconds: 3),(){
+      Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()));
+            MaterialPageRoute(builder: (context) => const LuWelcome()));
+      });
+    } else if (isANewUser == true) {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LuWelcome()));
       });
     }
-  }
+    }
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
