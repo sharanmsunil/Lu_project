@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static DateTime? nxtCycleEndDate;
   late SharedPreferences preferences;
   var bgColor = LuColors.bgColor;
-  var rangeIcon = const Icon(Icons.signal_cellular_alt_1_bar_outlined,color: LuColors.textWhiteColor,);
+  var rangeIcon =  Icon(Icons.signal_cellular_alt_1_bar_outlined,color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
   String rangeTxt ='Low';
   String daysToPeriod ='Period';
 
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Center(
         child: Text(
           day,
-          style: const TextStyle(color: LuColors.textWhiteColor),
+          style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
         ),
       ));
 
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Center(
         child: Text(
           day,
-          style: const TextStyle(color: LuColors.textWhiteColor),
+          style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
         ),
       ));
 
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Center(
         child: Text(
           day,
-          style: const TextStyle(color: LuColors.textWhiteColor),
+          style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
         ),
       ));
 
@@ -253,9 +253,9 @@ class _HomeScreenState extends State<HomeScreen> {
       firstDayOfWeek: DateTime.monday,
       viewportFraction: .7,
       selectedDayButtonColor: LuColors.textGreyColor,
-      weekdayTextStyle: const TextStyle(color: Colors.grey),
-      weekendTextStyle: const TextStyle(
-        color: Colors.black,
+      weekdayTextStyle:  TextStyle(color: Colors.grey,fontSize: Dimensions.font15),
+      weekendTextStyle:  TextStyle(
+        color: Colors.black,fontSize: Dimensions.font15
       ),
       dayPadding: 1,
       isScrollable: true,
@@ -311,8 +311,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (date != ovulationDates[j]) {
                     bgColor = Colors.grey;
                     daysToPeriod ='Prediction';
-                    rangeIcon = const Icon(Icons.signal_cellular_alt_1_bar,
-                               color: LuColors.textWhiteColor,);
+                    rangeIcon =  Icon(Icons.signal_cellular_alt_1_bar,
+                               color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
                     rangeTxt='Low';
                   }
                 }
@@ -323,8 +323,8 @@ class _HomeScreenState extends State<HomeScreen> {
             if (date == periodDates[i]) {
               bgColor = LuColors.periodColor;
               daysToPeriod ='Period';
-              rangeIcon = const Icon(Icons.signal_cellular_alt_1_bar,
-                color: LuColors.textWhiteColor,);
+              rangeIcon =  Icon(Icons.signal_cellular_alt_1_bar,
+                color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
               rangeTxt='Low';
             }
           }
@@ -332,8 +332,8 @@ class _HomeScreenState extends State<HomeScreen> {
             if (date == ovulationDates[i]) {
               bgColor = LuColors.ovulationColor;
               daysToPeriod ='Ovulation';
-              rangeIcon = const Icon(Icons.signal_cellular_alt_2_bar,
-                        color: LuColors.textWhiteColor,);
+              rangeIcon =  Icon(Icons.signal_cellular_alt_2_bar,
+                        color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
               rangeTxt='Medium';
             }
           }
@@ -341,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (date == highOvulationDates[i]) {
               bgColor = LuColors.ovulationColor;
               daysToPeriod ='Ovulation';
-              rangeIcon = const Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,);
+              rangeIcon =  Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
               rangeTxt='High';
             }
           }
@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (date == mainOvulationDates[i]) {
               bgColor = LuColors.ovulationColor;
               daysToPeriod ='Ovulation';
-              rangeIcon = const Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,);
+              rangeIcon =  Icon(Icons.signal_cellular_alt, color: LuColors.textWhiteColor,size: Dimensions.iconSize20,);
               rangeTxt='High';
             }
           }
@@ -362,13 +362,13 @@ class _HomeScreenState extends State<HomeScreen> {
       weekFormat: false,
       markedDatesMap: _markedDateMap,
 
-      height: 500,
+      height: Dimensions.height500,
       selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
       customGridViewPhysics: const ScrollPhysics(),
       showHeader: false,
-      todayTextStyle: const TextStyle(
-        color: LuColors.textPurpleColor,
+      todayTextStyle:  TextStyle(
+        color: LuColors.textPurpleColor,fontSize: Dimensions.font15
       ),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 1,
@@ -379,8 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
       todayButtonColor: LuColors.textGreyColor,
       minSelectedDate: DateTime(2023, 10),
       maxSelectedDate: DateTime(2024, 12, 31),
-      prevDaysTextStyle: const TextStyle(
-        fontSize: 16,
+      prevDaysTextStyle:  TextStyle(
+        fontSize: Dimensions.font15,
         color: Colors.black,
       ),
       onCalendarChanged: (DateTime date) {
@@ -401,13 +401,14 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text(
           (_currentDate == _today) ? 'Today, $_today1' : _currentDate,
-          style: const TextStyle(color: LuColors.textWhiteColor, fontSize: 25),
+          style:  TextStyle(color: LuColors.textWhiteColor, fontSize: Dimensions.font25),
         ),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon:  Icon(
               Icons.menu,
               color: LuColors.textWhiteColor,
+              size: Dimensions.iconSize20,
             ),
             onPressed: () {
               Navigator.of(context)
@@ -450,9 +451,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: <Widget>[
                           TextButton(
-                            child: const Text(
+                            child:  Text(
                               'PREV',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,fontSize: Dimensions.font15),
                             ),
                             onPressed: () {
                               setState(() {
@@ -465,9 +466,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const Spacer(),
                           TextButton(
-                            child: const Text(
+                            child:  Text(
                               'NEXT',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black,fontSize: Dimensions.font15),
                             ),
                             onPressed: () {
                               setState(() {
@@ -512,13 +513,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: Text(
                             daysToPeriod,
-                            style: const TextStyle(color: LuColors.textWhiteColor),
+                            style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
                           ),
                         ),
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
-                        thickness: 2,
+                        thickness: Dimensions.divider2,
                         width: Dimensions.width20,
                       ),
                       SizedBox(
@@ -533,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                    SizedBox(width: Dimensions.width5,),
                                   Text(
                                     rangeTxt,
-                                    style: const TextStyle(color: LuColors.textWhiteColor),
+                                    style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
                                   ),
                                 ],
                               ),
@@ -552,7 +553,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       VerticalDivider(
                         color: Colors.grey.shade400,
-                        thickness: 2,
+                        thickness: Dimensions.divider2,
                         width: Dimensions.width20,
                       ),
                      SizedBox(
@@ -563,12 +564,12 @@ class _HomeScreenState extends State<HomeScreen> {
                            children: [
                              Text(
                                '$cycleDay',
-                               style: const TextStyle(color: LuColors.textWhiteColor),
+                               style:  TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
                              ),
                               SizedBox(height: Dimensions.height5,),
-                             const Text(
+                              Text(
                                'day of cycle',
-                               style: TextStyle(color: LuColors.textWhiteColor),
+                               style: TextStyle(color: LuColors.textWhiteColor,fontSize: Dimensions.font15),
                              ),
                            ],
                          ),
@@ -605,17 +606,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   child:  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                       Icon(
                         Icons.keyboard_return,
                         color: LuColors.textLightPurpleColor,
+                         size: Dimensions.iconSize20,
                       ),
                       SizedBox(
                         width: Dimensions.width5,
                       ),
-                      const Text(
+                       Text(
                         'Today',
-                        style: TextStyle(color: LuColors.textLightPurpleColor),
+                        style: TextStyle(color: LuColors.textLightPurpleColor,fontSize: Dimensions.font15),
                       )
                     ],
                   )))

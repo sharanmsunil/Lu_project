@@ -109,7 +109,7 @@ class _LuWelcomeState extends State<LuWelcome> {
                           ]))
                     ],
                   )),
-            )
+            ),
           ],
         ),
       ),

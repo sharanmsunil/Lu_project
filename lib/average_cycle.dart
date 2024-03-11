@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:luna_loom/utils/dimensions.dart';
 import 'package:luna_loom/utils/lu_colors.dart';
@@ -49,10 +51,10 @@ class _AvgCycleState extends State<AvgCycle> {
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: const [
+                      boxShadow:  [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
-                            blurRadius: 5,
+                            blurRadius: Dimensions.radius5,
                             spreadRadius: .5)
                       ]),
                 ),
@@ -63,10 +65,10 @@ class _AvgCycleState extends State<AvgCycle> {
                   decoration: BoxDecoration(
                       color: LuColors.textWhiteColor,
                       borderRadius: BorderRadius.circular(Dimensions.radius50),
-                      boxShadow: const [
+                      boxShadow:  [
                         BoxShadow(
                             color: LuColors.textPurpleColor,
-                            blurRadius: 10,
+                            blurRadius: Dimensions.radius10,
                             spreadRadius: .5)
                       ]),
                 )),
@@ -75,13 +77,13 @@ class _AvgCycleState extends State<AvgCycle> {
                     minValue: 20,
                     maxValue: 50,
                     value: avgCyc,
-                    itemHeight: 45,
-                    itemWidth: 45,
+                    itemHeight: Dimensions.height45,
+                    itemWidth: Dimensions.width45,
                     itemCount: 7,
                     axis: Axis.horizontal,
-                    selectedTextStyle: const TextStyle(
+                    selectedTextStyle:  TextStyle(
                       color: LuColors.textPurpleColor,
-                      fontSize: 25,
+                      fontSize: Dimensions.font25,
                     ),
                     textStyle:
                         TextStyle(color: LuColors.textLightPurpleColor, fontSize: Dimensions.font15),

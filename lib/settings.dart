@@ -41,32 +41,27 @@ class _LuSettingsState extends State<LuSettings> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: LuColors.textWhiteColor,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
+                  return const HomeScreen();
+                },
+                    transitionsBuilder: (context,an1,an2,child){
+                      return FadeTransition(opacity: an1,child: child,);
+                    },
+                    transitionDuration: const Duration(milliseconds: 800)));
+              },
+              icon:  Icon(Icons.arrow_back,size: Dimensions.iconSize20,)),
+          centerTitle: true,
+          title: const LuFontText(text: 'Settings',color: Colors.black,),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: Dimensions.height30,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context,a1,a2){
-                          return const HomeScreen();
-                        },
-                            transitionsBuilder: (context,an1,an2,child){
-                              return FadeTransition(opacity: an1,child: child,);
-                            },
-                            transitionDuration: const Duration(milliseconds: 800)));
-                      },
-                      icon: const Icon(Icons.arrow_back)),
-                  SizedBox(
-                    width: Dimensions.width110,
-                  ),
-                  const LuFontText(text: 'Settings',color: Colors.black,),
-                ],
-              ),
               SizedBox(
                 height: Dimensions.height50,
               ),
@@ -259,101 +254,103 @@ class _LuSettingsState extends State<LuSettings> {
               SizedBox(
                 height: Dimensions.height20,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: Dimensions.width30,
-                  ),
-                  Icon(
-                    Icons.calendar_month_outlined,
-                    color: Colors.grey[400],
-                    size: Dimensions.iconSize40,
-                  ),
-                  SizedBox(
-                    width: Dimensions.width20,
-                  ),
-                  LuFontText(text: 'Notify about the start of \nthe period',
-                  size: Dimensions.font15,color: Colors.grey[600],),
-                  SizedBox(
-                    width: Dimensions.width40,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Toggle the visibility of the tick icon
-                      setState(() {
-                        isCTickVisible = !isCTickVisible;
-                      });
-                    },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: Dimensions.width40,
-                          height: Dimensions.height40,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: LuColors.textLightPurpleColor,
-                          ),
-                        ),
-                        if (isCTickVisible)
-                          Icon(
-                            Icons.check,
-                            color: LuColors.textWhiteColor,
-                            size: Dimensions.iconSize20,
-                          ),
-                      ],
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.calendar_month_outlined,
+                      color: Colors.grey[400],
+                      size: Dimensions.iconSize40,
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    LuFontText(text: 'Notify about the start of \nthe period',
+                    size: Dimensions.font15,color: Colors.grey[600],),
+                    SizedBox(
+                      width: Dimensions.width40,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Toggle the visibility of the tick icon
+                        setState(() {
+                          isCTickVisible = !isCTickVisible;
+                        });
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: Dimensions.width40,
+                            height: Dimensions.height40,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: LuColors.textLightPurpleColor,
+                            ),
+                          ),
+                          if (isCTickVisible)
+                            Icon(
+                              Icons.check,
+                              color: LuColors.textWhiteColor,
+                              size: Dimensions.iconSize20,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: Dimensions.height20,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: Dimensions.width30,
-                  ),
-                  Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey[400],
-                    size: Dimensions.iconSize40,
-                  ),
-                  SizedBox(
-                    width: Dimensions.width20,
-                  ),
-                  LuFontText(text: 'Notify about the start of \nthe ovulation',color: Colors.grey[600],size: Dimensions.font15,),
-                  SizedBox(
-                    width: Dimensions.width40,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Toggle the visibility of the tick icon
-                      setState(() {
-                        isPTickVisible = !isPTickVisible;
-                      });
-                    },
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: Dimensions.width40,
-                          height: Dimensions.height40,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: LuColors.textLightPurpleColor,
-                          ),
-                        ),
-                        if (isPTickVisible)
-                          Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: Dimensions.iconSize20,
-                          ),
-                      ],
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.circle_outlined,
+                      color: Colors.grey[400],
+                      size: Dimensions.iconSize40,
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    LuFontText(text: 'Notify about the start of \nthe ovulation',color: Colors.grey[600],size: Dimensions.font15,),
+                    SizedBox(
+                      width: Dimensions.width40,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Toggle the visibility of the tick icon
+                        setState(() {
+                          isPTickVisible = !isPTickVisible;
+                        });
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: Dimensions.width40,
+                            height: Dimensions.height40,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: LuColors.textLightPurpleColor,
+                            ),
+                          ),
+                          if (isPTickVisible)
+                            Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: Dimensions.iconSize20,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: Dimensions.height20,
@@ -384,9 +381,7 @@ class _LuSettingsState extends State<LuSettings> {
                     }
                   },
                   child: const LuFontText(text: 'Logout',color: LuColors.textPurpleColor,)),
-              SizedBox(
-                height: Dimensions.height20,
-              ),
+
             ],
           ),
         ),
