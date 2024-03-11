@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:luna_loom/utils/dimensions.dart';
 import 'package:luna_loom/utils/lu_colors.dart';
